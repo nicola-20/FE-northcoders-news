@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Link } from "@reach/router";
+import { Router, Link } from "@reach/router";
 import "./css/ArticleById.css";
 import * as api from "../api.js";
-import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ArticleComments from "./ArticleComments";
+import VoteChanger from "./VoteChanger";
 
 class ArticleById extends Component {
   state = {
@@ -24,19 +24,17 @@ class ArticleById extends Component {
     }
   };
   render() {
-    const { handleVoteChange } = this.props;
-    console.log(this.props.article_id, "article_id");
     const { article } = this.state;
-    console.log(article, "article");
-    console.log(this.state, "state");
+    console.log(this.props, "article by id props");
     return (
       <main className="ArticleById">
         <h2>{article.title}</h2>
+        <VoteChanger article={article} />
         <p>Topic: {`${article.belongs_to}`}</p>
         <p>
           Created by:{" "}
           <Link to={`/users/${article.created_by.username}`}>
-            {article.created_by.name}, {article.created_by.username}
+            {article.created_by.name}({article.created_by.username})
           </Link>
         </p>
         <p>Created at: {new Date(article.created_at).toUTCString()}</p>
@@ -46,27 +44,13 @@ class ArticleById extends Component {
             {article.comment_count} comments
           </Link>
         </p>
-        <div className="voteChanger">
-          <button
-            onClick={() => {
-              handleVoteChange(article._id, "up");
-            }}
-          >
-            <FontAwesomeIcon icon={faThumbsUp} />
-            Up
-          </button>
-          <br />
-          {article.votes} votes
-          <br />
-          <button
-            onClick={() => {
-              handleVoteChange(article._id, "down");
-            }}
-          >
-            <FontAwesomeIcon icon={faThumbsDown} />
-            Down
-          </button>
-        </div>
+
+        <Router>
+          <ArticleComments
+            path="/comments"
+            article_id={this.state.article._id}
+          />
+        </Router>
       </main>
     );
   }
@@ -79,6 +63,12 @@ class ArticleById extends Component {
         article
       });
     });
+    // return Promise.all([api.getArticleByID(article_id), api.getCommentsByArticleID(article_id)])
+    // .then(([article, comments]) => {
+    //   this.setState({
+    //     article, comments
+    //   });
+    // });
   }
 }
 

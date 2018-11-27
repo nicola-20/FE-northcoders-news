@@ -2,15 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "@reach/router";
 import "./css/Article.css";
-import {
-  faThumbsUp,
-  faThumbsDown,
-  faCommentAlt,
-  faUserAlt
-} from "@fortawesome/free-solid-svg-icons";
+import { faCommentAlt, faUserAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import VoteChanger from "./VoteChanger";
 
-const Article = ({ article, handleVoteChange }) => {
+const Article = ({ article, handleArticleVoteChange }) => {
   return (
     <div className="Article" key={article._id}>
       <h3 className="article-title">
@@ -32,25 +28,10 @@ const Article = ({ article, handleVoteChange }) => {
           {article.comment_count} comments
         </Link>
       </p>
-      <div className="article-votes">
-        {/* <button onClick={() => {handleVoteChange(article._id, 'up')}}><FontAwesomeIcon icon={faThumbsUp} />Up</button> */}
-        <FontAwesomeIcon
-          className="icon thumb up"
-          icon={faThumbsUp}
-          onClick={() => {
-            handleVoteChange(article._id, "up");
-          }}
-        />
-        <p>{article.votes}</p>
-        <FontAwesomeIcon
-          className="icon thumb down"
-          icon={faThumbsDown}
-          onClick={() => {
-            handleVoteChange(article._id, "down");
-          }}
-        />
-        {/* <button onClick={() => {handleVoteChange(article._id, 'down')}}><FontAwesomeIcon icon={faThumbsDown} />Down</button> */}
-      </div>
+      <VoteChanger
+        handleArticleVoteChange={handleArticleVoteChange}
+        article={article}
+      />
     </div>
   );
 };

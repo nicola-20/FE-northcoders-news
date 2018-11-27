@@ -11,6 +11,7 @@ import {
   faUserAlt
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ReactTooltip from 'react-tooltip'
 
 class Nav extends Component {
   state = {
@@ -21,12 +22,11 @@ class Nav extends Component {
     return (
       <nav className="Nav">
         <Link to="articles">
-          <FontAwesomeIcon className="icon" icon={faNewspaper} />
-          All Articles
+          <FontAwesomeIcon data-tip="View All Articles" className="icon" icon={faNewspaper} /><ReactTooltip type="dark"/>
         </Link>
-        <FontAwesomeIcon className="icon" icon={faCode} />
-        <FontAwesomeIcon className="icon" icon={faFutbol} />
-        <FontAwesomeIcon className="icon" icon={faUtensils} />
+        <FontAwesomeIcon className="icon" icon={faCode} data-tip="Coding Articles"/>
+        <FontAwesomeIcon className="icon" icon={faFutbol} data-tip="Football Articles"/>
+        <FontAwesomeIcon className="icon" icon={faUtensils} data-tip="Cooking Articles"/>
         {topics.map(topic => {
           return (
             <Link key={topic.slug} to={`topics/${topic.slug}/articles`}>
@@ -36,7 +36,7 @@ class Nav extends Component {
         })}
 
         <Link to="users">
-          <FontAwesomeIcon className="icon" icon={faUserAlt} />
+          <FontAwesomeIcon className="icon" icon={faUserAlt} data-tip="View All Users"/>
           Users
         </Link>
       </nav>

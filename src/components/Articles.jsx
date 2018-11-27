@@ -5,25 +5,28 @@ import * as api from "../api.js";
 import { Link } from "@reach/router";
 import "./css/Articles.css";
 import Article from "./Article";
-import ArticleById from "./ArticleById";
 
 class Articles extends Component {
   state = {
-    articles: []
+    articles: [],
+    filteredArticles: [],
+    search: ''
   };
   render() {
     const { topic_slug } = this.props;
-    const { articles } = this.state;
-    console.log(topic_slug);
+    const { filteredArticles } = this.state;
+    console.log(filteredArticles)
     return (
       <main className="Articles">
         <h2>Some articles on {topic_slug || `everything`}...</h2>
-        {articles.map(article => {
+        <label htmlFor="article-search">Search:</label>
+        <input type="text" placeholder="Search..." id="article-search" onChange={this.handleSearch} value={this.state.search}/>
+        {filteredArticles.map(article => {
           return (
             <Article
               key={article._id}
               article={article}
-              handleVoteChange={this.handleVoteChange}
+              handleArticleVoteChange={this.handleArticleVoteChange}
             />
           );
         })}
@@ -49,50 +52,50 @@ class Articles extends Component {
     if (topic_slug) {
       api.getArticlesByTopic(topic_slug).then(articles => {
         this.setState({
-          articles
+          articles,
+          filteredArticles: articles
         });
       });
     } else {
       api.getArticles().then(articles => {
         this.setState({
-          articles
+          articles,
+          filteredArticles: articles
         });
       });
     }
   }
 
-  handleVoteChange = (article_id, change) => {
+  handleArticleVoteChange = (article_id, change) => {
     api.updateArticleVotes(article_id, change).then(data => {
       console.log(data);
       this.fetchArticles();
     });
   };
+
+  handleSearch = (event) => {
+    const search = event.target.value.toLowerCase()
+    this.setSearch(search)
+    this.filterArticles()
+  }
+
+  setSearch = (search) => {
+    this.setState({
+      search
+    })
+  }
+
+  filterArticles = () => {
+    const { articles, search } = this.state
+    const filteredArticles = articles.filter((article) => {
+      return article.body.toLowerCase().includes(search) || article.title.toLowerCase().includes(search) || article.belongs_to.toLowerCase().includes(search)
+    })
+    this.setState({
+      filteredArticles
+    })
+  }
 }
 
 Articles.propTypes = {};
 
 export default Articles;
-
-// const Articles = props => {
-//   console.log(props.topic_slug)
-//   if (props.topic_slug) {
-//     return (
-//       <div>
-//         Some articles on {props.topic_slug}
-//       </div>
-//     )
-//   } else {
-//     return (
-//       <div>
-//         Articles
-//       </div>
-//     )
-//   }
-
-// };
-
-// Articles.propTypes = {
-
-// };
-
-// export default Articles;

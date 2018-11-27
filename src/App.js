@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import Home from "./components/Home";
 import Articles from "./components/Articles";
 import Users from "./components/Users";
+import UserByUsername from "./components/UserByUsername";
 import ArticleById from "./components/ArticleById";
 
 class App extends Component {
@@ -17,10 +18,11 @@ class App extends Component {
         <Nav />
         <Router>
           <Home path="/" />
-          <Articles path="/articles/*" />
+          <Articles path="/articles" />
           <Articles path="/topics/:topic_slug/articles" />
-          <ArticleById path="articles/:article_id" />
+          <ArticleById path="articles/:article_id/*" />
           <Users path="/users" />
+          <UserByUsername path="users/:username" />
         </Router>
         <Footer />
       </div>
