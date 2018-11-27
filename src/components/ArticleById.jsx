@@ -26,12 +26,12 @@ class ArticleById extends Component {
   };
   render() {
     const { article } = this.state;
-    console.log(this.props, "article by id props");
+    const { user } = this.props;
     // if (isLoading)
     return (
       <main className="ArticleById">
         <h2>{article.title}</h2>
-        <VoteChanger article={article} />
+        <VoteChanger article={article} user={user}/>
         <p>Topic: {`${article.belongs_to}`}</p>
         <p>
           Created by:{" "}
@@ -51,6 +51,7 @@ class ArticleById extends Component {
           <ArticleComments
             path="/comments"
             article_id={this.state.article._id}
+            user={user}
           />
         </Router>
       </main>

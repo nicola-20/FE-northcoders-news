@@ -1,0 +1,9 @@
+.ArticleById {
+  grid-area: main;
+  border: dashed 2px blue;
+  max-height: 100%;
+  overflow-y: scroll;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(232, 235, 244);
+}

@@ -1,0 +1,41 @@
+.input-popup form {
+  border: solid 1px red;
+  padding: 5px;
+  text-align: left;
+}
+.input-popup input {
+  font-size: 15px;
+  padding: 3px;
+  padding-left: 6px;
+  margin: 6px;
+  border: solid 1px black;
+  border-radius: 5px;
+  font-family: 'Montserrat';
+  letter-spacing: 0.05em;
+}
+.input-popup input::placeholder {
+  font-size: 15px;
+}
+#password {
+  font-family: sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: scale(1.1);
+}
+.input-popup label {
+  border: solid 1px green;
+  padding-left: 6px;
+}
+.input-popup button {
+  border: solid 1px black;
+  font-size: 15px;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  margin: 6px;
+}
+.input-popup button:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}

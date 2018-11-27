@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import * as api from "../api";
 import { Link } from "@reach/router";
+import User from "./User";
+import "./css/Users.css";
 
 class Users extends Component {
   state = {
@@ -10,21 +12,15 @@ class Users extends Component {
   render() {
     const { users } = this.state;
     return (
-      <ul>
+      <div className="users-list">
         {users.map(user => {
-          console.log(user, 'user')
-          return (
-            <li key={user._id}>
-              <Link to={`/users/${user.username}`}>{user.name}</Link>
-              <img src={`${user.avatar_url}`} alt={`${user.name}`}/>
-            </li>
-          );
+          return <User user={user} />;
         })}
-      </ul>
+      </div>
     );
   }
   componentDidMount() {
-    console.log('user mounted')
+    console.log("user mounted");
     api.getUsers().then(users => {
       this.setState({
         users

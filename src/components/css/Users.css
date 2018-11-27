@@ -1,0 +1,25 @@
+.users-list {
+  border: solid 1px green;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.user-card {
+  border: solid 1px red;
+  width: 30%;
+  margin: 10px;
+  height: 250px;
+  padding: 10px;
+}
+.user-card img {
+  height: 80%;
+  border: solid 1px pink;
+}
+.user-card h4 {
+  border: solid 1px black;
+  margin: 0;
+}
+.user-card a:link, .user-card a:visited {
+  color: black;
+}

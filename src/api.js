@@ -4,7 +4,7 @@ const BASE_URL = "https://stormy-river-98715.herokuapp.com/api";
 
 export const getArticles = async () => {
   const { data } = await axios.get(
-    `${BASE_URL}/articles`
+    `${BASE_URL}/articles?limit=1000`
   );
   return data.articles;
 };
@@ -16,24 +16,23 @@ export const getTopics = async () => {
 
 export const getArticlesByTopic = async topic_slug => {
   const { data } = await axios.get(
-    `${BASE_URL}/topics/${topic_slug}/articles`
+    `${BASE_URL}/topics/${topic_slug}/articles?limit=1000`
   );
   return data.articles;
 };
 
 export const addArticleToTopic = async (topic_slug, newArticle) => {
+  console.log(newArticle, 'new article inside api')
   const { data } = await axios.post(
-    `${BASE_URL}/topics/${topic_slug}/articles`,
+    `${BASE_URL}/topics/${topic_slug}/articles?limit=1000`,
     newArticle
   );
-  // newArticle must have title and body
+  // newArticle must have title and body and createdby
   return data.article;
 };
 
 export const getArticleByID = async article_id => {
-  console.log(article_id, "api articleid");
   const { data } = await axios.get(`${BASE_URL}/articles/${article_id}`);
-  console.log(data.article, "data.article");
   return data.article;
 };
 
@@ -95,7 +94,7 @@ export const getUserByUsername = async username => {
   return data.user;
 };
 
-export const login = async (username) => {
-  const { data } = await axios.get(`${BASE_URL}/users/${username}`)
-  return data.user
-}
+// export const login = async (username) => {
+//   const { data } = await axios.get(`${BASE_URL}/users/${username}`)
+//   return data.user
+// }

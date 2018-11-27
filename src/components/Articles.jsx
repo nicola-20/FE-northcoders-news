@@ -5,25 +5,35 @@ import * as api from "../api.js";
 import { Link } from "@reach/router";
 import "./css/Articles.css";
 import Article from "./Article";
-import AddArticle from './AddArticle'
-
+import AddArticle from "./AddArticle";
+import { faSearch, faSort } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Articles extends Component {
   state = {
     articles: [],
-    filteredArticles: [],
-    search: ''
+    search: ""
   };
   render() {
-    const { topic_slug } = this.props;
-    const { filteredArticles } = this.state;
+    const { topic_slug, user } = this.props;
+    const { articles, search } = this.state;
+
+    const filteredArticles = articles.filter(article => {
+      return (
+        article.body.toLowerCase().includes(search) ||
+        article.title.toLowerCase().includes(search) ||
+        article.belongs_to.toLowerCase().includes(search)
+      );
+    });
+
     return (
       <main className="Articles">
-      {/* Title */}
+        {/* Title */}
         <h2>Some articles on {topic_slug || `everything`}...</h2>
-      {/* Add article */}
-        <AddArticle user={this.props.user}/>
-      {/* Sort  */}
+        {/* Add article */}
+        {topic_slug && <AddArticle user={user} topic_slug={topic_slug}/>}
+        {/* Sort  */}
+        <FontAwesomeIcon icon={faSort} />
         <label htmlFor="sort-select">Sort:</label>
         <select name="sort-select" id="sort-select">
           <option value="">Sort by...</option>
@@ -32,15 +42,24 @@ class Articles extends Component {
           <option value="votes asc">Votes (Low-High)</option>
           <option value="votes des">Votes(High-Low)</option>
         </select>
-      {/* Search */}
-        <label htmlFor="article-search">Search:</label><input type="text" placeholder="Search..." id="article-search" onChange={this.handleSearch} value={this.state.search}/>
-      {/* Articles */}
+        {/* Search */}
+        <label htmlFor="article-search">Search:</label>
+        <input
+          type="text"
+          placeholder={`Search...`}
+          id="article-search"
+          onChange={this.handleSearch}
+          value={this.state.search}
+        />
+        <FontAwesomeIcon icon={faSearch} />
+        {/* Articles */}
         {filteredArticles.map(article => {
           return (
             <Article
               key={article._id}
               article={article}
               handleArticleVoteChange={this.handleArticleVoteChange}
+              user={user}
             />
           );
         })}
@@ -49,6 +68,7 @@ class Articles extends Component {
   }
 
   componentDidMount() {
+    console.log("articles mounting");
     this.fetchArticles();
   }
 
@@ -63,15 +83,13 @@ class Articles extends Component {
     if (topic_slug) {
       api.getArticlesByTopic(topic_slug).then(articles => {
         this.setState({
-          articles,
-          filteredArticles: articles
+          articles
         });
       });
     } else {
       api.getArticles().then(articles => {
         this.setState({
-          articles,
-          filteredArticles: articles
+          articles
         });
       });
     }
@@ -84,29 +102,12 @@ class Articles extends Component {
     });
   };
 
-  handleSearch = (event) => {
-    const search = event.target.value.toLowerCase()
-    console.log(search, 'handlesearch search')
-    this.setSearch(search)
-    this.filterArticles()
-  }
-
-  setSearch = (search) => {
+  handleSearch = event => {
+    const search = event.target.value.toLowerCase();
     this.setState({
       search
-    })
-  }
-
-  filterArticles = () => {
-    const { articles, search } = this.state
-    console.log(search, '<- search')
-    const filteredArticles = articles.filter((article) => {
-      return article.body.toLowerCase().includes(search) || article.title.toLowerCase().includes(search) || article.belongs_to.toLowerCase().includes(search)
-    })
-    this.setState({
-      filteredArticles
-    })
-  }
+    });
+  };
 }
 
 Articles.propTypes = {};

@@ -9,12 +9,11 @@ class ArticleComments extends Component {
   }
   render() {
     const { comments } = this.state
-    console.log(this.state, 'articlecomments state')
     return (
       <ul>
       {comments.map((comment) => {
         return (
-            <Comment key={comment._id} comment={comment}/>
+            <Comment key={comment._id} comment={comment} user={this.props.user}/>
         )
       })}
     </ul>
@@ -26,7 +25,6 @@ class ArticleComments extends Component {
     console.log('comments mounted')
     api.getCommentsByArticleID(article_id)
     .then((comments) => {
-      console.log(comments, 'comments from api')
       this.setState({
         comments
       })
