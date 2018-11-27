@@ -22,10 +22,12 @@ class ArticleById extends Component {
       __v: 0,
       comment_count: 0
     }
+    // isLoading
   };
   render() {
     const { article } = this.state;
     console.log(this.props, "article by id props");
+    // if (isLoading)
     return (
       <main className="ArticleById">
         <h2>{article.title}</h2>

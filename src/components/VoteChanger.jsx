@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const VoteChanger = props => {
   const { article, handleArticleVoteChange } = props;
   const { comment, handleCommentVoteChange } = props;
-  console.log(props, 'votechanger props')
   if (comment) {
     return (
       <div className="article-votes">

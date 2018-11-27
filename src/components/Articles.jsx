@@ -5,6 +5,8 @@ import * as api from "../api.js";
 import { Link } from "@reach/router";
 import "./css/Articles.css";
 import Article from "./Article";
+import AddArticle from './AddArticle'
+
 
 class Articles extends Component {
   state = {
@@ -15,12 +17,24 @@ class Articles extends Component {
   render() {
     const { topic_slug } = this.props;
     const { filteredArticles } = this.state;
-    console.log(filteredArticles)
     return (
       <main className="Articles">
+      {/* Title */}
         <h2>Some articles on {topic_slug || `everything`}...</h2>
-        <label htmlFor="article-search">Search:</label>
-        <input type="text" placeholder="Search..." id="article-search" onChange={this.handleSearch} value={this.state.search}/>
+      {/* Add article */}
+        <AddArticle user={this.props.user}/>
+      {/* Sort  */}
+        <label htmlFor="sort-select">Sort:</label>
+        <select name="sort-select" id="sort-select">
+          <option value="">Sort by...</option>
+          <option value="title asc">Title (A-Z)</option>
+          <option value="title desc">Title (Z-A)</option>
+          <option value="votes asc">Votes (Low-High)</option>
+          <option value="votes des">Votes(High-Low)</option>
+        </select>
+      {/* Search */}
+        <label htmlFor="article-search">Search:</label><input type="text" placeholder="Search..." id="article-search" onChange={this.handleSearch} value={this.state.search}/>
+      {/* Articles */}
         {filteredArticles.map(article => {
           return (
             <Article
@@ -30,9 +44,6 @@ class Articles extends Component {
             />
           );
         })}
-        {/* <Router>
-          <ArticleById path="/:article_id" handleVoteChange={this.handleVoteChange}/>
-        </Router> */}
       </main>
     );
   }
@@ -75,6 +86,7 @@ class Articles extends Component {
 
   handleSearch = (event) => {
     const search = event.target.value.toLowerCase()
+    console.log(search, 'handlesearch search')
     this.setSearch(search)
     this.filterArticles()
   }
@@ -87,6 +99,7 @@ class Articles extends Component {
 
   filterArticles = () => {
     const { articles, search } = this.state
+    console.log(search, '<- search')
     const filteredArticles = articles.filter((article) => {
       return article.body.toLowerCase().includes(search) || article.title.toLowerCase().includes(search) || article.belongs_to.toLowerCase().includes(search)
     })

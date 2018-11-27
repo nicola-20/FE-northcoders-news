@@ -4,7 +4,7 @@ const BASE_URL = "https://stormy-river-98715.herokuapp.com/api";
 
 export const getArticles = async () => {
   const { data } = await axios.get(
-    `${BASE_URL}/articles?limit=1000&sort=votes&by=desc`
+    `${BASE_URL}/articles`
   );
   return data.articles;
 };
@@ -16,14 +16,14 @@ export const getTopics = async () => {
 
 export const getArticlesByTopic = async topic_slug => {
   const { data } = await axios.get(
-    `${BASE_URL}/topics/${topic_slug}/articles?limit=1000`
+    `${BASE_URL}/topics/${topic_slug}/articles`
   );
   return data.articles;
 };
 
 export const addArticleToTopic = async (topic_slug, newArticle) => {
   const { data } = await axios.post(
-    `${BASE_URL}/topics/${topic_slug}/articles?limit=1000`,
+    `${BASE_URL}/topics/${topic_slug}/articles`,
     newArticle
   );
   // newArticle must have title and body
@@ -94,3 +94,8 @@ export const getUserByUsername = async username => {
   const { data } = await axios.get(`${BASE_URL}/users/${username}`);
   return data.user;
 };
+
+export const login = async (username) => {
+  const { data } = await axios.get(`${BASE_URL}/users/${username}`)
+  return data.user
+}
