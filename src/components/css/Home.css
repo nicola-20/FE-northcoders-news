@@ -1,0 +1,4 @@
+.Home {
+  grid-area: main;
+  border: solid 1px blue;
+}

@@ -1,0 +1,11 @@
+nav {
+  grid-area: nav;
+  border: solid 1px red;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.Nav a:link, a:visited {
+  padding: 20px;
+  border: solid 1px green;
+}
