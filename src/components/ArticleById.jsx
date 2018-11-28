@@ -29,30 +29,39 @@ class ArticleById extends Component {
   };
   render() {
     const { article, isLoading } = this.state;
-    const { user } = this.props;
+    const { user, updateVotes } = this.props;
     if (isLoading) {
       return <p>Loading...</p>;
     } else {
       return (
         <main className="ArticleById">
-        <div className="article-byid">
-          <h2 className="articlebyid-title">{article.title}</h2>
-          <VoteChanger article={article} user={user}/>
-          <p className="articlebyid-topic">Topic: {`${article.belongs_to}`}</p>
-          <p className="articlebyid-user">
-            Created by:{" "}
-            <Link to={`/users/${article.created_by.username}`}>
-              {article.created_by.name}({article.created_by.username})
-            </Link>
-          </p>
-          <p className="articlebyid-date">Created at: {new Date(article.created_at).toUTCString()}</p>
-          <div className="articlebyid-body">{article.body}</div>
-          <p className="articlebyid-comments">
-            <Link to={`/articles/${article._id}/comments`}>
-              <FontAwesomeIcon className="icon" icon={faComments} />
-              {article.comment_count} comments
-            </Link>
-          </p>
+          <div className="article-byid">
+            <h2 className="articlebyid-title">{article.title}</h2>
+            <VoteChanger
+              article={article}
+              user={user}
+              updateVotes={updateVotes}
+              handleArticleVoteChange={this.handleArticleVoteChange}
+            />
+            <p className="articlebyid-topic">
+              Topic: {`${article.belongs_to}`}
+            </p>
+            <p className="articlebyid-user">
+              Created by:{" "}
+              <Link to={`/users/${article.created_by.username}`}>
+                {article.created_by.name}({article.created_by.username})
+              </Link>
+            </p>
+            <p className="articlebyid-date">
+              Created at: {new Date(article.created_at).toUTCString()}
+            </p>
+            <div className="articlebyid-body">{article.body}</div>
+            <p className="articlebyid-comments">
+              <Link to={`/articles/${article._id}/comments`}>
+                <FontAwesomeIcon className="icon" icon={faComments} />
+                {article.comment_count} comments
+              </Link>
+            </p>
           </div>
 
           <Router>
@@ -60,6 +69,8 @@ class ArticleById extends Component {
               path="/comments"
               article_id={this.state.article._id}
               user={user}
+              updateVotes={updateVotes}
+              updateCommentCount={this.updateCommentCount}
             />
           </Router>
         </main>
@@ -85,8 +96,25 @@ class ArticleById extends Component {
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevState.article.comment_count !== this.state.article.comment_count) {
-      
     }
+  }
+  handleArticleVoteChange = (article_id, change) => {
+    this.props.updateVotes("article", article_id, change);
+    const { article } = this.state
+    let voteChange = 0;
+    if (change === "up") voteChange = +1;
+    if (change === "down") voteChange = -1;
+    const updatedArticle = {...article, votes: article.votes + voteChange}
+    this.setState({
+      article: updatedArticle
+    })
+  };
+  updateCommentCount = (change) => {
+    const { article } = this.state
+    const updatedArticle = {...article, comment_count: article.comment_count + change}
+    this.setState({
+      article: updatedArticle
+    })
   }
 }
 

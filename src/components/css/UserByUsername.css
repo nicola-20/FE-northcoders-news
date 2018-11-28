@@ -1,0 +1,36 @@
+.user-page {
+  background-color: palegreen;
+  grid-area: main;
+  height: 100%;
+  overflow-y: scroll;
+  align-items: center;
+  justify-content: center;
+}
+.userbyusername-box {
+  border: solid 1px red;
+  width: 60%;
+  align-self: center;
+  margin: 10px auto;
+  height: 90%;
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
+}
+.userbyusername-box img {
+  height: 85%;
+  border: solid 1px pink;
+  margin: 10 auto;
+  padding: 0px;
+}
+.userbyusername-box h4 {
+  border: solid 1px black;
+  margin: 0;
+  font-size: 30px;
+}
+.userbyusername-box a:link, .userbyusername-box a:visited {
+  color: black;
+}
+.userbyusername-box p {
+  border: solid 1px blueviolet;
+  margin: 5px;
+}

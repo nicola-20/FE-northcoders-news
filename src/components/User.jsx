@@ -8,7 +8,7 @@ const User = ({ user }) => {
     <div className="user-card">
       <Link to={`/users/${user.username}`}>
         <h4 key={user._id}>{user.name}</h4>
-        <p>{user.username}</p>
+        <p>username: {user.username}</p>
         <br />
         <img src={`${user.avatar_url}`} alt={`${user.name}`} />
       </Link>

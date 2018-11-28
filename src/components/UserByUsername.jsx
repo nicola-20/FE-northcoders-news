@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import * as api from "../api";
+import "./css/UserByUsername.css";
 
 class UserByUsername extends Component {
   state = {
@@ -19,10 +20,12 @@ class UserByUsername extends Component {
       return <p>Loading...</p>;
     } else {
       return (
-        <div>
-          <p>{user.name}</p>
-          <p>{user.username}</p>
-          <img src={`${user.avatar_url}`} alt={`${user.name}`} />
+        <div className="user-page">
+          <div className="userbyusername-box">
+            <h4>{user.name}</h4>
+            <p>{user.username}</p>
+            <img src={`${user.avatar_url}`} alt={`${user.name}`} />
+          </div>
         </div>
       );
     }

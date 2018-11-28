@@ -1,20 +1,29 @@
 .users-list {
+  grid-area: main;
   border: solid 1px green;
+  max-height: 100%;
+  overflow-y: scroll;
+  align-items: center;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  background-color: yellow;
 }
 .user-card {
   border: solid 1px red;
-  width: 30%;
+  width: 25%;
   margin: 10px;
-  height: 250px;
+  height: 300px;
   padding: 10px;
+  background-color: white;
+  border-radius: 10px;
 }
 .user-card img {
   height: 80%;
   border: solid 1px pink;
+  margin: -10px auto;
+  padding: 0px;
 }
 .user-card h4 {
   border: solid 1px black;
@@ -22,4 +31,8 @@
 }
 .user-card a:link, .user-card a:visited {
   color: black;
+}
+.user-card p {
+  border: solid 1px blueviolet;
+  margin: 5px;
 }

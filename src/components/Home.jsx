@@ -45,7 +45,7 @@ class Home extends Component {
             </div> */}
           {featuredArticles.map(article => {
             return (
-              <div>
+              <div key={article._id}>
                 <h3 className="article-title">
                   <Link to={`/articles/${article._id}`}>{article.title}</Link>
                 </h3>
@@ -69,7 +69,8 @@ class Home extends Component {
     }
   }
   componentDidMount() {
-    api.getArticles().then(articles => {
+    const sort = ''
+    api.getArticles(sort).then(articles => {
       let featuredArticles = [];
       featuredArticles.push(_.sample(articles));
       featuredArticles.push(_.sample(articles));

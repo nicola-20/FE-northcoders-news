@@ -6,7 +6,7 @@ import { faCommentAlt, faUserAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import VoteChanger from "./VoteChanger";
 
-const Article = ({ article, handleArticleVoteChange, user }) => {
+const Article = ({ article, handleArticleVoteChange, user, updateVotes }) => {
   return (
     <div className="Article" key={article._id}>
       <h3 className="article-title">
@@ -32,6 +32,7 @@ const Article = ({ article, handleArticleVoteChange, user }) => {
         handleArticleVoteChange={handleArticleVoteChange}
         article={article}
         user={user}
+        updateVotes={updateVotes}
       />
     </div>
   );

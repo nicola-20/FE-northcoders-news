@@ -54,8 +54,8 @@ class Login extends Component {
           }
           position="bottom right"
         >
-          <ReactTooltip type="dark" />
           <form onSubmit={this.handleSubmit}>
+          <ReactTooltip type="dark" />
             <label htmlFor="username">Username: </label>
             <input
               type="text"
@@ -88,15 +88,22 @@ class Login extends Component {
   handleSubmit = event => {
     const { login } = this.props;
     event.preventDefault();
-    api.getUserByUsername(this.state.username).then(user => {
+    api.getUserByUsername(this.state.username)
+    .then(user => {
       login(user);
-    });
-    this.forceUpdate();
+    })
+    this.setState({
+      loggedIn: true
+    })
+    // this.forceUpdate();
   };
   handleLogout = event => {
     const { logout } = this.props;
     logout();
-    this.forceUpdate();
+    this.setState({
+      loggedIn: false
+    })
+    // this.forceUpdate();
   };
 }
 

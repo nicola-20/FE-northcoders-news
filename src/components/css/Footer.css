@@ -1,4 +1,4 @@
-footer {
+.footer {
   grid-area: footer;
   border: solid 1px green;
   display: flex;
@@ -6,4 +6,5 @@ footer {
   align-items: center;
   background-color: rgb(201, 139, 139);
   color: white;
+  border-radius: 10px;
 }

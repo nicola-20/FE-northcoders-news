@@ -6,7 +6,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReactTooltip from "react-tooltip";
 
-const Comment = ({ comment, user, deleteComment }) => {
+const Comment = ({ comment, user, deleteComment, updateVotes, handleCommentVoteChange }) => {
   return (
     <div className="comment">
       <span className="comment-user">{comment.created_by.name}</span>
@@ -30,7 +30,7 @@ const Comment = ({ comment, user, deleteComment }) => {
         }}
       />
       <ReactTooltip type="dark" />
-      <VoteChanger comment={comment} user={user} />
+      <VoteChanger comment={comment} user={user} updateVotes={updateVotes} handleCommentVoteChange={handleCommentVoteChange}/>
       {/* <p>{comment.votes}</p> */}
     </div>
   );
