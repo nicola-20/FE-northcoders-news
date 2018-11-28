@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReactTooltip from "react-tooltip";
+import './css/ArticleComments.css'
+import './css/Article.css'
 
 const VoteChanger = ({
   article,
@@ -99,3 +101,42 @@ const VoteChanger = ({
 VoteChanger.propTypes = {};
 
 export default VoteChanger;
+
+
+// import React, { Component } from 'react';
+// import PropTypes from 'prop-types';
+
+// <Voter type="article"/>
+// <Voter type="comment"/>
+
+// class Voter extends Component {
+//   const { err, voteMod } = this.state
+//   const { votes } = this.props
+//   state = {
+//     voteMod: 0
+//   }
+//   render() {
+//     return (
+//       <div>
+//         {err ? (<p>Something went wrong</p>) : (<><button onClick={() => {this.vote('up')}} disabled={voteMod === 1}>Like</button>Votes: {votes + voteMod}<button onClick={() => {this.vote('down')}} disabled={voteMod === -1}>Dislike</button></>)}
+//       </div>
+//     );
+//   }
+//   vote = (direction) => {
+//     api.vote(this.props.id, direction)
+//     .catch(err => {
+//       this.setState({
+//         err
+//       })
+//     })
+//     this.setState({
+//       voteMod: direction === 'up' ? 1 : -1
+//     })
+//   }
+// }
+
+// VoteChanger.propTypes = {
+
+// };
+
+// export default VoteChanger;

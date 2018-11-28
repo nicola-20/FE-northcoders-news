@@ -7,23 +7,29 @@ import "./css/Users.css";
 
 class Users extends Component {
   state = {
-    users: []
+    users: [],
+    isLoading: true
   };
   render() {
-    const { users } = this.state;
-    return (
-      <div className="users-list">
-        {users.map(user => {
-          return <User user={user} />;
-        })}
-      </div>
-    );
+    const { users, isLoading } = this.state;
+    if (isLoading) {
+      return <p>Loading...</p>;
+    } else {
+      return (
+        <div className="users-list">
+          {users.map(user => {
+            return <User user={user} />;
+          })}
+        </div>
+      );
+    }
   }
   componentDidMount() {
     console.log("user mounted");
     api.getUsers().then(users => {
       this.setState({
-        users
+        users,
+        isLoading: false
       });
     });
   }

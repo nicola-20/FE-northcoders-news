@@ -79,8 +79,8 @@ export const updateCommentVotes = async (comment_id, change) => {
   return data;
 };
 
-export const deleteComment = async id => {
-  const { data } = await axios.delete(`${BASE_URL}/comments/${id}`);
+export const deleteComment = async comment_id => {
+  const { data } = await axios.delete(`${BASE_URL}/comments/${comment_id}`);
   return data;
 };
 

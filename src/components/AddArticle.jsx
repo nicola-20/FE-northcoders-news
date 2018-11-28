@@ -127,7 +127,6 @@ class AddArticle extends Component {
       body: this.state.body,
       created_by: this.state.created_by
     }
-    console.log(newArticle, 'new article inside add article')
     api.addArticleToTopic(topic_slug, newArticle);
   };
 }

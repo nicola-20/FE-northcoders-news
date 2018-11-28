@@ -5,6 +5,9 @@ import "./css/ArticleById.css";
 import * as api from "../api.js";
 import ArticleComments from "./ArticleComments";
 import VoteChanger from "./VoteChanger";
+import { faCommentAlt, faComments } from "@fortawesome/free-regular-svg-icons";
+// import { faComments, faComment, faCommentAlt } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class ArticleById extends Component {
   state = {
@@ -21,41 +24,47 @@ class ArticleById extends Component {
       belongs_to: "",
       __v: 0,
       comment_count: 0
-    }
-    // isLoading
+    },
+    isLoading: true
   };
   render() {
-    const { article } = this.state;
+    const { article, isLoading } = this.state;
     const { user } = this.props;
-    // if (isLoading)
-    return (
-      <main className="ArticleById">
-        <h2>{article.title}</h2>
-        <VoteChanger article={article} user={user}/>
-        <p>Topic: {`${article.belongs_to}`}</p>
-        <p>
-          Created by:{" "}
-          <Link to={`/users/${article.created_by.username}`}>
-            {article.created_by.name}({article.created_by.username})
-          </Link>
-        </p>
-        <p>Created at: {new Date(article.created_at).toUTCString()}</p>
-        <div>{article.body}</div>
-        <p>
-          <Link to={`/articles/${article._id}/comments`}>
-            {article.comment_count} comments
-          </Link>
-        </p>
+    if (isLoading) {
+      return <p>Loading...</p>;
+    } else {
+      return (
+        <main className="ArticleById">
+        <div className="article-byid">
+          <h2 className="articlebyid-title">{article.title}</h2>
+          <VoteChanger article={article} user={user}/>
+          <p className="articlebyid-topic">Topic: {`${article.belongs_to}`}</p>
+          <p className="articlebyid-user">
+            Created by:{" "}
+            <Link to={`/users/${article.created_by.username}`}>
+              {article.created_by.name}({article.created_by.username})
+            </Link>
+          </p>
+          <p className="articlebyid-date">Created at: {new Date(article.created_at).toUTCString()}</p>
+          <div className="articlebyid-body">{article.body}</div>
+          <p className="articlebyid-comments">
+            <Link to={`/articles/${article._id}/comments`}>
+              <FontAwesomeIcon className="icon" icon={faComments} />
+              {article.comment_count} comments
+            </Link>
+          </p>
+          </div>
 
-        <Router>
-          <ArticleComments
-            path="/comments"
-            article_id={this.state.article._id}
-            user={user}
-          />
-        </Router>
-      </main>
-    );
+          <Router>
+            <ArticleComments
+              path="/comments"
+              article_id={this.state.article._id}
+              user={user}
+            />
+          </Router>
+        </main>
+      );
+    }
   }
 
   componentDidMount() {
@@ -63,7 +72,8 @@ class ArticleById extends Component {
     const { article_id } = this.props;
     api.getArticleByID(article_id).then(article => {
       this.setState({
-        article
+        article,
+        isLoading: false
       });
     });
     // return Promise.all([api.getArticleByID(article_id), api.getCommentsByArticleID(article_id)])

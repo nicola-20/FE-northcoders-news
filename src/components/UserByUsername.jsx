@@ -10,23 +10,29 @@ class UserByUsername extends Component {
       name: "",
       avatar_url: "",
       __v: 0
-    }
+    },
+    isLoading: true
   };
   render() {
-    const { user } = this.state;
-    return (
-      <div>
-        <p>{user.name}</p>
-        <p>{user.username}</p>
-        <img src={`${user.avatar_url}`} alt={`${user.name}`}/>
-      </div>
-    );
+    const { user, isLoading } = this.state;
+    if (isLoading) {
+      return <p>Loading...</p>;
+    } else {
+      return (
+        <div>
+          <p>{user.name}</p>
+          <p>{user.username}</p>
+          <img src={`${user.avatar_url}`} alt={`${user.name}`} />
+        </div>
+      );
+    }
   }
   componentDidMount() {
     const { username } = this.props;
     api.getUserByUsername(username).then(user => {
       this.setState({
-        user
+        user,
+        isLoading: false
       });
     });
   }

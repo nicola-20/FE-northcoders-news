@@ -12,11 +12,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 class Articles extends Component {
   state = {
     articles: [],
-    search: ""
+    search: "",
+    isLoading: true
   };
   render() {
     const { topic_slug, user } = this.props;
-    const { articles, search } = this.state;
+    const { articles, search, isLoading } = this.state;
 
     const filteredArticles = articles.filter(article => {
       return (
@@ -25,46 +26,49 @@ class Articles extends Component {
         article.belongs_to.toLowerCase().includes(search)
       );
     });
-
-    return (
-      <main className="Articles">
-        {/* Title */}
-        <h2>Some articles on {topic_slug || `everything`}...</h2>
-        {/* Add article */}
-        {topic_slug && <AddArticle user={user} topic_slug={topic_slug}/>}
-        {/* Sort  */}
-        <FontAwesomeIcon icon={faSort} />
-        <label htmlFor="sort-select">Sort:</label>
-        <select name="sort-select" id="sort-select">
-          <option value="">Sort by...</option>
-          <option value="title asc">Title (A-Z)</option>
-          <option value="title desc">Title (Z-A)</option>
-          <option value="votes asc">Votes (Low-High)</option>
-          <option value="votes des">Votes(High-Low)</option>
-        </select>
-        {/* Search */}
-        <label htmlFor="article-search">Search:</label>
-        <input
-          type="text"
-          placeholder={`Search...`}
-          id="article-search"
-          onChange={this.handleSearch}
-          value={this.state.search}
-        />
-        <FontAwesomeIcon icon={faSearch} />
-        {/* Articles */}
-        {filteredArticles.map(article => {
-          return (
-            <Article
-              key={article._id}
-              article={article}
-              handleArticleVoteChange={this.handleArticleVoteChange}
-              user={user}
-            />
-          );
-        })}
-      </main>
-    );
+    if (isLoading) {
+      return <p>Loading...</p>;
+    } else {
+      return (
+        <main className="Articles">
+          {/* Title */}
+          <h2>Some articles on {topic_slug || `everything`}...</h2>
+          {/* Add article */}
+          {topic_slug && <AddArticle user={user} topic_slug={topic_slug} />}
+          {/* Sort  */}
+          <FontAwesomeIcon icon={faSort} />
+          <label htmlFor="sort-select">Sort:</label>
+          <select name="sort-select" id="sort-select">
+            <option value="">Sort by...</option>
+            <option value="title asc">Title (A-Z)</option>
+            <option value="title desc">Title (Z-A)</option>
+            <option value="votes asc">Votes (Low-High)</option>
+            <option value="votes des">Votes(High-Low)</option>
+          </select>
+          {/* Search */}
+          <label htmlFor="article-search">Search:</label>
+          <input
+            type="text"
+            placeholder={`Search...`}
+            id="article-search"
+            onChange={this.handleSearch}
+            value={this.state.search}
+          />
+          <FontAwesomeIcon icon={faSearch} />
+          {/* Articles */}
+          {filteredArticles.map(article => {
+            return (
+              <Article
+                key={article._id}
+                article={article}
+                handleArticleVoteChange={this.handleArticleVoteChange}
+                user={user}
+              />
+            );
+          })}
+        </main>
+      );
+    }
   }
 
   componentDidMount() {
@@ -83,13 +87,15 @@ class Articles extends Component {
     if (topic_slug) {
       api.getArticlesByTopic(topic_slug).then(articles => {
         this.setState({
-          articles
+          articles,
+          isLoading: false
         });
       });
     } else {
       api.getArticles().then(articles => {
         this.setState({
-          articles
+          articles,
+          isLoading: false
         });
       });
     }
@@ -101,6 +107,26 @@ class Articles extends Component {
       this.fetchArticles();
     });
   };
+  // increment votes by one
+  // state => {return {article: {...state.article, votes: state.article.votes + 1}}}
+  // votes: state.article.votes + 1
+  // re sort on vote
+
+  // optimistic rendering, assume it works - give immediate feedback
+  // error handling
+  // err ? <p> Something went wrong </p> : <votes>
+  // api.votes()
+  // .catch((err) => {
+  //  this.setState({
+  //  err
+  // })
+  // })
+  // this.setState(state => {
+  //   return {article: {...state.article, votes: state.article.votes + 1}}
+  // }
+  // )
+
+  // LIMIT NUMBER OF TIMES YOU CAN VOTE
 
   handleSearch = event => {
     const search = event.target.value.toLowerCase();
