@@ -18,7 +18,7 @@ class ArticleComments extends Component {
     } else {
       return (
         <div class="articlebyid-comments-box">
-          <AddComment article_id={article_id} user={user}/>
+          <AddComment article_id={article_id} user={user} addComment={this.addComment}/>
           {comments.map(comment => {
             return (
               <Comment
@@ -47,19 +47,26 @@ class ArticleComments extends Component {
   deleteComment = comment_id => {
     const { comments } = this.state;
     api.deleteComment(comment_id).then(() => {
-      const commentsWithDeletes = comments.map(comment => {
-        if (comment._id === comment_id) {
-          return { Deleted: "comment was deleted" };
-        } else {
-          return comment
-        }
+      const commentsWithDeletes = comments.filter(comment => {
+        return (comment._id !== comment_id)
       });
       this.setState({
         comments: commentsWithDeletes,
-        isLoaing: false
+        isLoading: false
       });
     });
   };
+  addComment = (article_id, newComment) => {
+    const { comments } = this.state
+    api.addCommentToArticle(article_id, newComment)
+    .then((addedComment) => {
+      const commentsWithNewCommentAdded = [addedComment, ...comments]
+      this.setState({
+        comments: commentsWithNewCommentAdded,
+        isLoading: false
+      })
+    })
+  }
 }
 
 ArticleComments.propTypes = {};

@@ -37,13 +37,25 @@ class App extends Component {
       </div>
     );
   }
+  componentDidMount() {
+    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser')).user
+    console.log(loggedInUser, '<< loggedin user')
+    if (loggedInUser.username) {
+      this.setState({
+        user: loggedInUser
+      })
+    }
+  }
   login = user => {
+    console.log(user)
+    sessionStorage.setItem('loggedInUser', JSON.stringify({user}))
     this.setState({
       user
     });
   };
 
   logout = () => {
+    sessionStorage.clear()
     this.setState({
       user: {}
     });

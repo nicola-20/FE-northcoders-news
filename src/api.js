@@ -45,13 +45,13 @@ export const updateArticleVotes = async (article_id, change) => {
 };
 
 export const getComments = async () => {
-  const { data } = await axios.get(`${BASE_URL}/comments`);
+  const { data } = await axios.get(`${BASE_URL}/comments?limit=1000`);
   return data.articles;
 };
 
 export const getCommentsByArticleID = async article_id => {
   const { data } = await axios.get(
-    `${BASE_URL}/articles/${article_id}/comments`
+    `${BASE_URL}/articles/${article_id}/comments?limit=1000`
   );
   return data.comments;
 };
@@ -60,7 +60,7 @@ export const addCommentToArticle = async (article_id, newComment) => {
   // const {title, body} = newComment
   // const body = { title, body }
   const { data } = await axios.post(
-    `${BASE_URL}/articles/${article_id}/comments`,
+    `${BASE_URL}/articles/${article_id}/comments?limit=1000`,
     newComment
   );
   return data.comment;

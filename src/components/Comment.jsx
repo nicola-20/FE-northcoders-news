@@ -5,7 +5,6 @@ import "./css/ArticleComments.css";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReactTooltip from "react-tooltip";
-import { deleteComment } from "../api";
 
 const Comment = ({ comment, user, deleteComment }) => {
   return (

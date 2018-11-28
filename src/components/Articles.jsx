@@ -34,7 +34,7 @@ class Articles extends Component {
           {/* Title */}
           <h2>Some articles on {topic_slug || `everything`}...</h2>
           {/* Add article */}
-          {topic_slug && <AddArticle user={user} topic_slug={topic_slug} />}
+          <AddArticle user={user} topic_slug={topic_slug} addArticle={this.addArticle}/>
           {/* Sort  */}
           <FontAwesomeIcon icon={faSort} />
           <label htmlFor="sort-select">Sort:</label>
@@ -134,6 +134,18 @@ class Articles extends Component {
       search
     });
   };
+  addArticle = (topic_slug, newArticle) => {
+    const { articles } = this.state
+    api.addArticleToTopic(topic_slug, newArticle)
+    .then((addedArticle) => {
+      const articlesWithNewArticleAdded = [addedArticle, ...articles]
+      this.setState({
+        articles: articlesWithNewArticleAdded,
+        search: '',
+        isLoading: false
+      })
+    })
+  }
 }
 
 Articles.propTypes = {};

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./css/ArticleComments.css";
-import * as api from '../api'
+import * as api from "../api";
 
 class AddComment extends Component {
   state = {
@@ -9,7 +9,7 @@ class AddComment extends Component {
     created_by: ""
   };
   render() {
-    const { user, article_id } = this.props;
+    const { user, article_id, addComment } = this.props;
     if (user.username) {
       // if logged in
       return (
@@ -42,7 +42,7 @@ class AddComment extends Component {
             required
             value={this.props.user.username}
           /> */}
-          <button type="submit">Add Comment</button>
+            <button type="submit">Add Comment</button>
           </form>
         </div>
       );
@@ -64,20 +64,24 @@ class AddComment extends Component {
       });
     }
   }
-  handleChange = (event) => {
+  handleChange = event => {
     const { name, value } = event.target;
     this.setState({
       [name]: value
     });
-  }
+  };
   handleSubmit = event => {
     event.preventDefault();
-    const { article_id } = this.props
+    const { article_id, addComment } = this.props;
     const newComment = {
       body: this.state.body,
       created_by: this.state.created_by
-    }
-    api.addCommentToArticle(article_id, newComment)
+    };
+    addComment(article_id, newComment);
+    this.setState({
+      body: "",
+      created_by: ""
+    });
   };
 }
 

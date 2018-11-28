@@ -83,6 +83,11 @@ class ArticleById extends Component {
     //   });
     // });
   }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.article.comment_count !== this.state.article.comment_count) {
+      
+    }
+  }
 }
 
 ArticleById.propTypes = {};
