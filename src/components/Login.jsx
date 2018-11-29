@@ -7,7 +7,6 @@ import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./css/Login.css";
 import _ from "lodash";
-import { navigate } from '@reach/router'
 
 class Login extends Component {
   state = {
@@ -20,7 +19,8 @@ class Login extends Component {
       "weegembump"
     ]),
     password: "password",
-    loggedIn: false
+    loggedIn: false,
+    err: ''
   };
   render() {
     const { user } = this.props;
@@ -58,6 +58,7 @@ class Login extends Component {
               value={this.state.username}
               onChange={this.handleChange}
             />
+            <p className="form-error">{this.state.err ? "Username does not exist" : ''}</p>
             <label htmlFor="password">Password: </label>
             <input
               type="password"
@@ -85,7 +86,8 @@ class Login extends Component {
       login(user);
     })
     .catch((err) => {
-      navigate("/error", {state: {code: err.response.status, message: err.response.statusText}})
+      this.setState({err})
+      // navigate("/error", {state: {code: err.response.status, message: err.response.statusText}})
     })
     this.setState({
       loggedIn: true

@@ -11,7 +11,8 @@ class AddArticle extends Component {
     title: "",
     body: "",
     created_by: "",
-    topic_slug: ""
+    topic_slug: "",
+    err: ""
   };
   render() {
     const { user, topic_slug } = this.props;
@@ -33,7 +34,7 @@ class AddArticle extends Component {
         >
           {close => (
             <form className="add-article-form" onSubmit={this.handleSubmit}>
-            <ReactTooltip type="dark" id="plus-icon-add"/>
+              <ReactTooltip type="dark" id="plus-icon-add" />
               <h4>Add Article:</h4>
               <label htmlFor="new-article-title" id="title-label">
                 Title:
@@ -47,6 +48,9 @@ class AddArticle extends Component {
                 value={this.state.title}
                 onChange={this.handleChange}
               />
+              <p className="form-error">
+                {this.state.err ? "Article needs a title" : ""}
+              </p>
               <br />
               <label htmlFor="new-article-body" id="content-label">
                 Content:{" "}
@@ -60,6 +64,9 @@ class AddArticle extends Component {
                 value={this.state.body}
                 onChange={this.handleChange}
               />
+              <p className="form-error">
+                {this.state.err ? "Article needs some content" : ""}
+              </p>
               <br />
               <label htmlFor="new-article-user" id="user-label">
                 User:{" "}
@@ -109,7 +116,12 @@ class AddArticle extends Component {
                 className="close"
                 type="submit"
                 onClick={event => {
-                  close();
+                  if (
+                    this.state.title.length > 1 &&
+                    this.state.body.length > 1
+                  ) {
+                    close();
+                  }
                   this.handleSubmit(event);
                 }}
               >
@@ -128,8 +140,8 @@ class AddArticle extends Component {
             icon={faPlusSquare}
             data-tip="You must be logged in to add an article!"
             data-for="plus-icon-login"
-            />
-            <ReactTooltip type="dark" id="plus-icon-login" />
+          />
+          <ReactTooltip type="dark" id="plus-icon-login" />
         </>
       );
     }
@@ -163,11 +175,24 @@ class AddArticle extends Component {
       body: this.state.body,
       created_by: this.state.created_by
     };
-    addArticle(topic_slug, newArticle);
-    this.setState({
-      title: "",
-      body: ""
-    });
+    if (newArticle.title.length < 1 || newArticle.body.length < 1) {
+      if (newArticle.title.length < 1) {
+        this.setState({
+          err: "Article must have a title!"
+        });
+      }
+      if (newArticle.body.length < 1) {
+        this.setState({
+          err: "Article must have some content!"
+        });
+      }
+    } else {
+      addArticle(topic_slug, newArticle);
+      this.setState({
+        title: "",
+        body: ""
+      });
+    }
   };
 }
 

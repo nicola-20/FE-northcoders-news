@@ -4,6 +4,10 @@
   text-align: left;
   background-color: rgb(172, 48, 54);
 }
+.form-error {
+  font-size: 12px;
+  padding-left: 10px;
+}
 .input-popup input {
   font-size: 15px;
   padding: 3px;
