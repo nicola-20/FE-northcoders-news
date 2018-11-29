@@ -52,7 +52,8 @@
   letter-spacing: 0.08em;
   color: rgb(172, 48, 54);
 }
-.featured-article a:link, .featured-article a:visited {
+.featured-article a:link,
+.featured-article a:visited {
   text-decoration: none;
   color: rgb(33, 40, 41);
 }
@@ -62,7 +63,6 @@
 }
 .featured-article .home-article-title {
   border: solid 0px black;
-  /* border-radius: 2em; */
   font-size: 1.2em;
   background-color: rgb(33, 40, 41);
   color: white;
@@ -71,12 +71,14 @@
   padding-bottom: 1%;
   padding-left: 2.4%;
 }
-.featured-article .home-article-title a:link, .featured-article .home-article-title a:visited {
+.featured-article .home-article-title a:link,
+.featured-article .home-article-title a:visited {
   color: white;
 }
 .featured-article .featured-article-body {
   border: solid 0px blue;
   margin: 1%;
+  padding-left: 10px;
 }
 .featured-article-user {
   border: solid 0px red;

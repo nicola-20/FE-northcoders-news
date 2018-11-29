@@ -2,10 +2,11 @@ import axios from "axios";
 
 const BASE_URL = "https://stormy-river-98715.herokuapp.com/api";
 
-
-export const getArticles = async (sort) => {
-  const sortString = sort.length > 1 ? `&sort=${sort.split(' ')[0]}&by=${sort.split(' ')[1]}` : ''
-  console.log(sortString, 'sortString')
+export const getArticles = async sort => {
+  const sortString =
+    sort.length > 1
+      ? `&sort=${sort.split(" ")[0]}&by=${sort.split(" ")[1]}`
+      : "";
   const { data } = await axios.get(
     `${BASE_URL}/articles?limit=1000${sortString}`
   );
@@ -18,8 +19,10 @@ export const getTopics = async () => {
 };
 
 export const getArticlesByTopic = async (topic_slug, sort) => {
-  const sortString = sort.length > 1 ? `&sort=${sort.split(' ')[0]}&by=${sort.split(' ')[1]}` : ''
-  console.log(sortString, 'sortString')
+  const sortString =
+    sort.length > 1
+      ? `&sort=${sort.split(" ")[0]}&by=${sort.split(" ")[1]}`
+      : "";
   const { data } = await axios.get(
     `${BASE_URL}/topics/${topic_slug}/articles?limit=1000${sortString}`
   );
@@ -27,12 +30,10 @@ export const getArticlesByTopic = async (topic_slug, sort) => {
 };
 
 export const addArticleToTopic = async (topic_slug, newArticle) => {
-  console.log(newArticle, 'new article inside api')
   const { data } = await axios.post(
     `${BASE_URL}/topics/${topic_slug}/articles`,
     newArticle
   );
-  // newArticle must have title and body and createdby
   return data.article;
 };
 
@@ -45,18 +46,25 @@ export const updateArticleVotes = async (article_id, change) => {
   const { data } = await axios.patch(
     `${BASE_URL}/articles/${article_id}?vote=${change}`
   );
-  // change = up or down
   return data;
 };
 
-export const getComments = async (sort) => {
-  const sortString = sort.length > 1 ? `&sort=${sort.split(' ')[0]}&by=${sort.split(' ')[1]}` : ''
-  const { data } = await axios.get(`${BASE_URL}/comments?limit=1000${sortString}`);
+export const getComments = async sort => {
+  const sortString =
+    sort.length > 1
+      ? `&sort=${sort.split(" ")[0]}&by=${sort.split(" ")[1]}`
+      : "";
+  const { data } = await axios.get(
+    `${BASE_URL}/comments?limit=1000${sortString}`
+  );
   return data.articles;
 };
 
 export const getCommentsByArticleID = async (article_id, sort) => {
-  const sortString = sort.length > 1 ? `&sort=${sort.split(' ')[0]}&by=${sort.split(' ')[1]}` : ''
+  const sortString =
+    sort.length > 1
+      ? `&sort=${sort.split(" ")[0]}&by=${sort.split(" ")[1]}`
+      : "";
   const { data } = await axios.get(
     `${BASE_URL}/articles/${article_id}/comments?limit=1000${sortString}`
   );
@@ -64,8 +72,6 @@ export const getCommentsByArticleID = async (article_id, sort) => {
 };
 
 export const addCommentToArticle = async (article_id, newComment) => {
-  // const {title, body} = newComment
-  // const body = { title, body }
   const { data } = await axios.post(
     `${BASE_URL}/articles/${article_id}/comments`,
     newComment
@@ -82,7 +88,6 @@ export const updateCommentVotes = async (comment_id, change) => {
   const { data } = await axios.patch(
     `${BASE_URL}/comments/${comment_id}?vote=${change}`
   );
-  // change = up or down
   return data;
 };
 
@@ -100,8 +105,3 @@ export const getUserByUsername = async username => {
   const { data } = await axios.get(`${BASE_URL}/users/${username}`);
   return data.user;
 };
-
-// export const login = async (username) => {
-//   const { data } = await axios.get(`${BASE_URL}/users/${username}`)
-//   return data.user
-// }

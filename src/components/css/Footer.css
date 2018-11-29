@@ -6,12 +6,11 @@
   align-items: center;
   background-color: rgb(172, 48, 54);
   color: white;
-  padding: 5px;
+  padding: 0.2%;
   letter-spacing: 0.07em;
-  font-size: 14px;
+  font-size: 0.8em;
 }
 .footer .footer-northcoders {
   font-weight: 700;
   letter-spacing: 0.1em;
-  text-emphasis: 
 }

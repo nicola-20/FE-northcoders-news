@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import * as api from "../api";
 import User from "./User";
 import "./css/Users.css";
+import Loading from "./Loading";
+import { navigate } from '@reach/router'
 
 class Users extends Component {
   state = {
@@ -12,7 +14,9 @@ class Users extends Component {
   render() {
     const { users, isLoading } = this.state;
     if (isLoading) {
-      return <p>Loading...</p>;
+      return (
+        <Loading />
+      );
     } else {
       return (
         <div className="users-list">
@@ -24,13 +28,15 @@ class Users extends Component {
     }
   }
   componentDidMount() {
-    console.log("user mounted");
     api.getUsers().then(users => {
       this.setState({
         users,
         isLoading: false
       });
-    });
+    })
+    .catch((err) => {
+      navigate("/error", {state: {code: err.response.status, message: err.response.statusText}})
+    })
   }
 }
 

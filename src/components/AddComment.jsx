@@ -13,29 +13,44 @@ class AddComment extends Component {
       // if logged in
       return (
         <div className="add-comment">
-          <h4>Add Comment</h4>
+          <h4>Comment as <span className="italic">{user.username}</span></h4>
           <form onSubmit={this.handleSubmit}>
-            <br />
-            <label htmlFor="new-comment-body" id="comment-content-label">
-              {`Comment as ${user.username}`}
-            </label>
             <br />
             <textarea
               name="body"
               id="new-comment-body"
-              cols="60"
+              cols="80"
               rows="2"
               required
               value={this.state.body}
               onChange={this.handleChange}
             />
+            <br/>
             <button type="submit">Add Comment</button>
           </form>
         </div>
       );
     } else {
       // if not logged in
-      return <p>You must be logged in to post a comment</p>;
+      return (
+        <div className="add-comment">
+        <h4>Comment</h4>
+        <form>
+          <br />
+          <textarea
+            name="body"
+            id="new-comment-body"
+            cols="80"
+            rows="2"
+            required
+            readOnly
+            value="You must be logged in to add a comment!"
+          />
+          <br/>
+          <button disabled={true}>Add Comment</button>
+        </form>
+      </div>
+      )
     }
   }
   componentDidMount() {

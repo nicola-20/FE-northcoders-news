@@ -13,18 +13,18 @@ const Article = ({ article, handleArticleVoteChange, user, updateVotes }) => {
         <Link to={`/articles/${article._id}`}>{article.title}</Link>
       </h3>
       <p className="article-user">
-        by{" "}
+        {/* by{" "} */}
         <Link to={`/users/${article.created_by.username}`}>
           <FontAwesomeIcon className="icon" icon={faUserAlt} />
           {article.created_by.name}
         </Link>
       </p>
       <p className="article-createdAt">
-        created at: {new Date(article.created_at).toUTCString()}
+        <strong>posted: </strong>{new Date(article.created_at).toUTCString()}
       </p>
       <p className="article-comments">
         <Link to={`/articles/${article._id}/comments`}>
-          <FontAwesomeIcon className="icon" icon={faCommentAlt} />
+          <FontAwesomeIcon className="icon" icon={faCommentAlt} /> {'  '}
           {article.comment_count} comments
         </Link>
       </p>

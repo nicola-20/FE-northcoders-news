@@ -7,6 +7,8 @@ import _ from "lodash";
 import { Link } from "@reach/router";
 import Truncate from "react-truncate";
 import ReactTooltip from "react-tooltip";
+import Loading from "./Loading";
+import { navigate } from '@reach/router'
 
 class Home extends Component {
   state = {
@@ -15,11 +17,12 @@ class Home extends Component {
   };
   render() {
     const { user } = this.props;
-    console.log(user);
     const welcomeName = user.name ? `, ${user.name.split(" ")[0]}!` : "!";
     const { featuredArticles, isLoading } = this.state;
     if (isLoading) {
-      return <p>Loading...</p>;
+      return (
+        <Loading />
+      );
     } else {
       return (
         <main className="Home">
@@ -53,8 +56,8 @@ class Home extends Component {
                     >
                       ...
                     </Link>
-                    <ReactTooltip type="dark" id="article-see-more" />
                   </p>
+                    <ReactTooltip type="dark" id="article-see-more" />
                 </div>
               );
             })}
@@ -65,16 +68,18 @@ class Home extends Component {
   }
   componentDidMount() {
     const sort = "";
-    api.getArticles(sort).then(articles => {
+    api.getArticles(sort)
+    .then(articles => {
       const featuredArticles = _.sampleSize(articles, 2)
-      // let featuredArticles = [];
-      // featuredArticles.push(_.sample(articles));
-      // featuredArticles.push(_.sample(articles));
       this.setState({
         featuredArticles,
         isLoading: false
       });
-    });
+    })
+    .catch((err) => {
+      navigate("/error", {state: {code: err.response.status, message: err.response.statusText}})
+    })
+    
   }
 }
 

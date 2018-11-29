@@ -6,6 +6,9 @@ import "./css/ArticleComments.css";
 import AddComment from "./AddComment";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Loading from "./Loading";
+import { navigate } from '@reach/router'
+// import Collapsible from 'react-collapsible'
 
 class ArticleComments extends Component {
   state = {
@@ -17,19 +20,17 @@ class ArticleComments extends Component {
     const { comments, isLoading } = this.state;
     const { user, article_id, updateVotes } = this.props;
     if (isLoading) {
-      return <p>Loading...</p>;
+      return (
+        <Loading />
+      );
     } else {
       return (
+        // <Collapsible trigger="Comments">
         <div className="articlebyid-comments-box">
-          <AddComment
-            article_id={article_id}
-            user={user}
-            addComment={this.addComment}
-          />
-
           <div className="articlebyid-comment-sort">
-            <FontAwesomeIcon icon={faSort} />
-            <label htmlFor="sort-select">SORT:</label>
+            <label htmlFor="sort-select">
+              <FontAwesomeIcon icon={faSort} /> SORT:
+            </label>
             <select
               name="sort-select"
               id="sort-select"
@@ -44,6 +45,11 @@ class ArticleComments extends Component {
             </select>
           </div>
 
+          <AddComment
+            article_id={article_id}
+            user={user}
+            addComment={this.addComment}
+          />
           {comments.map(comment => {
             return (
               <Comment
@@ -57,12 +63,12 @@ class ArticleComments extends Component {
             );
           })}
         </div>
+        // </Collapsible>
       );
     }
   }
 
   componentDidMount() {
-    console.log("comments mounted");
     this.fetchComments();
   }
   componentDidUpdate(prevProps, prevState) {
@@ -78,7 +84,10 @@ class ArticleComments extends Component {
         comments,
         isLoading: false
       });
-    });
+    })
+    .catch((err) => {
+      navigate("/error", {state: {code: err.response.status, message: err.response.statusText}})
+    })
   };
   deleteComment = comment_id => {
     const { comments } = this.state;
@@ -91,7 +100,10 @@ class ArticleComments extends Component {
         comments: commentsWithDeletes,
         isLoading: false
       });
-    });
+    })
+    .catch((err) => {
+      navigate("/error", {state: {code: err.response.status, message: err.response.statusText}})
+    })
   };
   addComment = (article_id, newComment) => {
     const { comments } = this.state;
@@ -102,7 +114,10 @@ class ArticleComments extends Component {
         comments: commentsWithNewCommentAdded,
         isLoading: false
       });
-    });
+    })
+    .catch((err) => {
+      navigate("/error", {state: {code: err.response.status, message: err.response.statusText}})
+    })
   };
   handleCommentVoteChange = (comment_id, change) => {
     this.props.updateVotes("comment", comment_id, change);

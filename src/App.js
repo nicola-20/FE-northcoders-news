@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Router } from "@reach/router";
+import { Router, navigate } from "@reach/router";
 import "./App.css";
 import Header from "./components/Header";
 import Nav from "./components/Nav";
@@ -10,18 +10,18 @@ import Users from "./components/Users";
 import UserByUsername from "./components/UserByUsername";
 import ArticleById from "./components/ArticleById";
 import * as api from './api'
+import Error from "./components/ErrorPage";
+import BadRequest from './components/BadRequest'
 
 class App extends Component {
   state = {
     user: {}
   };
   render() {
-    console.log(this.state.user, "user in app state");
     return (
       <div className="App">
         <Header />
         <Nav login={this.login} logout={this.logout} user={this.state.user} />
-        {/* <Login login={this.login} user={this.state.user}> */}
         <Router>
           <Home path="/" user={this.state.user}/>
           <Articles path="/articles" user={this.state.user} updateVotes={this.updateVotes}/>
@@ -33,8 +33,9 @@ class App extends Component {
           <ArticleById path="articles/:article_id/*" user={this.state.user} updateVotes={this.updateVotes}/>
           <Users path="/users" user={this.state.user} />
           <UserByUsername path="users/:username" user={this.state.user} />
+          <Error default/>
+          <BadRequest path="/error"/>
         </Router>
-        {/* </Login> */}
         <Footer />
       </div>
     );
@@ -43,7 +44,6 @@ class App extends Component {
     if (sessionStorage.length > 0) {
       const loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"))
         .user;
-      console.log(loggedInUser, "<< loggedin user");
       if (loggedInUser.username) {
         this.setState({
           user: loggedInUser
@@ -52,7 +52,6 @@ class App extends Component {
     }
   }
   login = user => {
-    console.log(user);
     sessionStorage.setItem("loggedInUser", JSON.stringify({ user }));
     this.setState({
       user
@@ -73,11 +72,17 @@ class App extends Component {
       .then((data) => {
         return data
       })
+      .catch((err) => {
+        navigate("/error", {state: {code: err.response.status, message: err.response.statusText}})
+      })
     } else if (articleOrComment === 'comment') {
       const comment_id = id
       api.updateCommentVotes(comment_id, change)
       .then((data) => {
         return data
+      })
+      .catch((err) => {
+        navigate("/error", {state: {code: err.response.status, message: err.response.statusText}})
       })
     }
   }

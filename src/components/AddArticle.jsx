@@ -14,7 +14,6 @@ class AddArticle extends Component {
     topic_slug: ""
   };
   render() {
-    console.log(this.state, "state addarticle");
     const { user, topic_slug } = this.props;
     if (user.username) {
       // if logged in
@@ -26,6 +25,7 @@ class AddArticle extends Component {
               className="icon plus"
               icon={faPlusSquare}
               data-tip="Add Article"
+              data-for="plus-icon-add"
             />
           }
           modal
@@ -33,8 +33,8 @@ class AddArticle extends Component {
         >
           {close => (
             <form className="add-article-form" onSubmit={this.handleSubmit}>
-              <ReactTooltip type="dark" />
-              <h4>Add new article:</h4>
+            <ReactTooltip type="dark" id="plus-icon-add"/>
+              <h4>Add Article:</h4>
               <label htmlFor="new-article-title" id="title-label">
                 Title:
               </label>
@@ -113,7 +113,7 @@ class AddArticle extends Component {
                   this.handleSubmit(event);
                 }}
               >
-                Add Article
+                POST
               </button>
             </form>
           )}
@@ -127,15 +127,14 @@ class AddArticle extends Component {
             className="icon plus"
             icon={faPlusSquare}
             data-tip="You must be logged in to add an article!"
-          />
-          <ReactTooltip type="dark" />
+            data-for="plus-icon-login"
+            />
+            <ReactTooltip type="dark" id="plus-icon-login" />
         </>
       );
     }
   }
   componentDidMount() {
-    console.log("add article mounted");
-    console.log(this.props, "add article props");
     const { user, topic_slug } = this.props;
     this.setState({
       created_by: user._id,

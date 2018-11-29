@@ -1,24 +1,27 @@
 .Article {
-  border: solid 1px pink;
+  border: solid 0px pink;
   list-style: none;
   display: grid;
-  grid-template-columns: 1fr 5fr 2fr;
+  grid-template-columns: 1fr 8fr 2fr;
   grid-template-rows: 1.5fr 1fr;
-  grid-template-areas: 
-    'article-votes article-title article-user'
-    'article-votes article-createdAt article-comments';
+  grid-template-areas:
+    "article-votes article-title article-user"
+    "article-votes article-createdAt article-comments";
   align-items: center;
   background-color: white;
-  margin: 20px;
-  border-radius: 10px;
+  margin: 2.5%;
+  border-radius: 5px;
+  color: rgb(33, 40, 41);
+  padding: 10px;
 }
-.Article a:link, a:visited {
+.Article a:link,
+a:visited {
   text-decoration: none;
-  color: black;
+  color: rgb(33, 40, 41);
 }
 .Article a:hover {
   text-decoration: underline;
-  color: black;
+  color: rgb(33, 40, 41);
 }
 .icon {
   padding: 3px;
@@ -31,17 +34,19 @@
   color: green;
 }
 .down:hover {
-  color: red;
+  color: rgb(172, 48, 54);
 }
 
 .article-votes {
   grid-area: article-votes;
   align-self: center;
-  border: solid 1px grey;
+  border: solid 0px grey;
   margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
 .article-votes p {
-  margin: 0;
+  margin: 2%;
 }
 .article-votes button {
   border: none;
@@ -51,21 +56,31 @@
 }
 .article-title {
   grid-area: article-title;
-  border: solid 1px grey;
+  border: solid 0px grey;
   margin: 0;
+  text-align: left;
+  padding-left: 10px;
+  letter-spacing: 0.03em;
+  font-size: 20px;
 }
 .article-user {
   grid-area: article-user;
-  border: solid 1px grey;
+  border: solid 0px grey;
   margin: 0;
 }
 .article-createdAt {
   grid-area: article-createdAt;
-  border: solid 1px grey;
+  border: solid 0px grey;
   margin: 0;
+  text-align: left;
+  padding-left: 10px;
+}
+.article-createdAt strong {
+  font-weight: 500;
 }
 .article-comments {
   grid-area: article-comments;
-  border: solid 1px grey;
+  border: solid 0px grey;
   margin: 0;
+  padding: 2px;
 }

@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Router, Link } from "@reach/router";
+import { Router, Link, navigate } from "@reach/router";
 import "./css/ArticleById.css";
 import * as api from "../api.js";
 import ArticleComments from "./ArticleComments";
 import VoteChanger from "./VoteChanger";
-import { faCommentAlt } from "@fortawesome/free-solid-svg-icons"
+import { faCommentAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Loading from "./Loading";
 
 class ArticleById extends Component {
   state = {
@@ -30,7 +31,7 @@ class ArticleById extends Component {
     const { article, isLoading } = this.state;
     const { user, updateVotes } = this.props;
     if (isLoading) {
-      return <p>Loading...</p>;
+      return <Loading />
     } else {
       return (
         <main className="ArticleById">
@@ -43,22 +44,30 @@ class ArticleById extends Component {
               handleArticleVoteChange={this.handleArticleVoteChange}
             />
             <p className="articlebyid-topic">
-              Topic: {`${article.belongs_to}`}
+              Topic:{" "}
+              <strong>
+                <Link to={`/topics/${article.belongs_to}/articles`}>{`${
+                  article.belongs_to
+                }`}</Link>
+              </strong>
             </p>
             <p className="articlebyid-user">
               Created by:{" "}
-              <Link to={`/users/${article.created_by.username}`}>
-                {article.created_by.name}({article.created_by.username})
-              </Link>
+              <strong>
+                <Link to={`/users/${article.created_by.username}`}>
+                  {article.created_by.name} ({article.created_by.username})
+                </Link>
+              </strong>
             </p>
             <p className="articlebyid-date">
-              Created at: {new Date(article.created_at).toUTCString()}
+              Created at:{" "}
+              <strong>{new Date(article.created_at).toUTCString()}</strong>
             </p>
             <div className="articlebyid-body">{article.body}</div>
             <p className="articlebyid-comments">
               <Link to={`/articles/${article._id}/comments`}>
-                <FontAwesomeIcon className="icon" icon={faCommentAlt} />
-                {article.comment_count} comments
+                <FontAwesomeIcon className="icon" icon={faCommentAlt} />{" "}
+                <strong>{article.comment_count}</strong> comments
               </Link>
             </p>
           </div>
@@ -78,14 +87,22 @@ class ArticleById extends Component {
   }
 
   componentDidMount() {
-    console.log("article mounted");
     const { article_id } = this.props;
-    api.getArticleByID(article_id).then(article => {
-      this.setState({
-        article,
-        isLoading: false
-      });
-    });
+    api
+      .getArticleByID(article_id)
+      .then(article => {
+        this.setState({
+          article,
+          isLoading: false
+        });
+      })
+      .catch((err) => {
+        navigate("/error", {state: {code: err.response.status, message: err.response.statusText}})
+      })
+      // .catch(err => {
+      //   console.log(err, 'error')
+      //   this.setState({ err });
+      // });
   }
   handleArticleVoteChange = (article_id, change) => {
     this.props.updateVotes("article", article_id, change);

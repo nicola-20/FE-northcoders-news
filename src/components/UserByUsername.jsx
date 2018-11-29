@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import * as api from "../api";
 import "./css/UserByUsername.css";
+import Loading from "./Loading";
+import { navigate } from '@reach/router'
 
 class UserByUsername extends Component {
   state = {
@@ -17,7 +19,9 @@ class UserByUsername extends Component {
   render() {
     const { user, isLoading } = this.state;
     if (isLoading) {
-      return <p>Loading...</p>;
+      return (
+        <Loading />
+      );
     } else {
       return (
         <div className="user-page">
@@ -37,7 +41,10 @@ class UserByUsername extends Component {
         user,
         isLoading: false
       });
-    });
+    })
+    .catch((err) => {
+      navigate("/error", {state: {code: err.response.status, message: err.response.statusText}})
+    })
   }
 }
 

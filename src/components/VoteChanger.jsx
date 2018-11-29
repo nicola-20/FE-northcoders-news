@@ -21,7 +21,6 @@ class VoteChanger extends Component {
     if (comment) {
       return (
         <div className="comment-votes">
-          <ReactTooltip type="dark" />
           <button
             value="up"
             disabled={this.state.vote === "up" || !user.username}
@@ -40,7 +39,9 @@ class VoteChanger extends Component {
                     : "Vote Up"
                   : "You must be logged in to vote!"
               }
+              data-for="comment-up"
             />
+            <ReactTooltip type="dark" id="comment-up"/>
           </button>
           <p>{comment.votes}</p>
           <button
@@ -61,7 +62,9 @@ class VoteChanger extends Component {
                     : "Vote Down"
                   : "You must be logged in to vote!"
               }
+              data-for="comment-down"
             />
+            <ReactTooltip type="dark" id="comment-down"/>
           </button>
         </div>
       );
@@ -86,7 +89,9 @@ class VoteChanger extends Component {
                     : "Vote Up"
                   : "You must be logged in to vote!"
               }
+              data-for="article-up"
             />
+            <ReactTooltip type="dark" id="article-up"/>
           </button>
           <p>{article.votes}</p>
           <button
@@ -107,7 +112,9 @@ class VoteChanger extends Component {
                     : "Vote Down"
                   : "You must be logged in to vote!"
               }
+              data-for="article-down"
             />
+            <ReactTooltip type="dark" id="article-down"/>
           </button>
         </div>
       );
@@ -129,41 +136,3 @@ VoteChanger.propTypes = {
 };
 
 export default VoteChanger;
-
-// import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
-
-// <Voter type="article"/>
-// <Voter type="comment"/>
-
-// class Voter extends Component {
-//   const { err, voteMod } = this.state
-//   const { votes } = this.props
-//   state = {
-//     voteMod: 0
-//   }
-//   render() {
-//     return (
-//       <div>
-//         {err ? (<p>Something went wrong</p>) : (<><button onClick={() => {this.vote('up')}} disabled={voteMod === 1}>Like</button>Votes: {votes + voteMod}<button onClick={() => {this.vote('down')}} disabled={voteMod === -1}>Dislike</button></>)}
-//       </div>
-//     );
-//   }
-//   vote = (direction) => {
-//     api.vote(this.props.id, direction)
-//     .catch(err => {
-//       this.setState({
-//         err
-//       })
-//     })
-//     this.setState({
-//       voteMod: direction === 'up' ? 1 : -1
-//     })
-//   }
-// }
-
-// VoteChanger.propTypes = {
-
-// };
-
-// export default VoteChanger;

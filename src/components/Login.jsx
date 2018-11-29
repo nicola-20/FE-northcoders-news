@@ -7,6 +7,7 @@ import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./css/Login.css";
 import _ from "lodash";
+import { navigate } from '@reach/router'
 
 class Login extends Component {
   state = {
@@ -22,7 +23,6 @@ class Login extends Component {
     loggedIn: false
   };
   render() {
-    console.log(this.props, "login props");
     const { user } = this.props;
     if (user.username) {
       return (
@@ -66,7 +66,7 @@ class Login extends Component {
               value={this.state.password}
             />
             <br />
-            <button>Log in</button>
+            <button>LOG IN</button>
           </form>
         </Popup>
       );
@@ -83,7 +83,10 @@ class Login extends Component {
     event.preventDefault();
     api.getUserByUsername(this.state.username).then(user => {
       login(user);
-    });
+    })
+    .catch((err) => {
+      navigate("/error", {state: {code: err.response.status, message: err.response.statusText}})
+    })
     this.setState({
       loggedIn: true
     });

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import * as api from "../api";
 import "./css/Nav.css";
 import { faNewspaper } from "@fortawesome/free-regular-svg-icons";
@@ -68,8 +68,8 @@ class Nav extends Component {
         })}
 
         <Link to="users" data-tip="View All Users" data-for="view-users">
-          <FontAwesomeIcon className="icon" icon={faUserAlt} />
-          USERS
+          <FontAwesomeIcon className="icon" icon={faUserAlt} />{' '}
+          USERS 
         </Link>
         <ReactTooltip type="dark" id="view-users" />
         <Login login={login} logout={logout} user={user} />
@@ -82,7 +82,10 @@ class Nav extends Component {
       this.setState({
         topics
       });
-    });
+    })
+    .catch((err) => {
+      navigate("/error", {state: {code: err.response.status, message: err.response.statusText}})
+    })
   }
 }
 

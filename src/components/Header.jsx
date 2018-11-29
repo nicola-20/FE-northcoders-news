@@ -10,7 +10,7 @@ class Header extends Component {
 			<header className="Header">
         <h1>
           {/* <Link to="/"><span id="N">N</span>orthcoders <span id="N">N</span>ews</Link> */}
-          <Link to="/"><span class="northcoders"><span id="N">N</span>orthcoders/</span><span class="news">news</span></Link>
+          <Link to="/"><span className="northcoders"><span id="N">N</span>orthcoders/</span><span className="news">news</span></Link>
         </h1>
       </header>
 		);

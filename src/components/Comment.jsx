@@ -2,9 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import VoteChanger from "./VoteChanger";
 import "./css/ArticleComments.css";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReactTooltip from "react-tooltip";
+import {Link} from '@reach/router'
 
 const Comment = ({
   comment,
@@ -15,14 +16,14 @@ const Comment = ({
 }) => {
   return (
     <div className="comment">
-      <span className="comment-user">{comment.created_by.name}</span>
+      <span className="comment-user"><Link to={`/users/${comment.created_by.username}`}>{comment.created_by.name}</Link></span>
       <span className="comment-date">
         {new Date(comment.created_at).toUTCString()}
       </span>
       <p className="comment-body">{comment.body}</p>
       <FontAwesomeIcon
         className="comment-delete"
-        icon={faTrash}
+        icon={faTrashAlt}
         data-tip={
           user.username
             ? user.name === comment.created_by.name

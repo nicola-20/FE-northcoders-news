@@ -1,0 +1,46 @@
+.error {
+  grid-area: main;
+  height: 100%;
+  background-color: rgb(33, 40, 41);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.error a:link, .error a:visited {
+  color: white;
+}
+.error h1 {
+  padding: 0;
+  margin: 0px;
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+.error .icon {
+  align-self: center;
+  font-size: 35px;
+}
+#err {
+  color: rgb(172, 48, 54);
+}
+.error .icon:hover {
+  transform: none;
+  cursor: default;
+}
+.error p {
+  font-size: 18px;
+}
+#home-link {
+  font-size: 25px;
+}
+#home-link a:link, #home-link a:visited {
+  font-size: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+#home-link a:hover {
+  transform: scale(1.1);
+  color: rgb(172, 48, 54);
+}
