@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./css/ArticleComments.css";
-import * as api from "../api";
 
 class AddComment extends Component {
   state = {
@@ -9,7 +8,7 @@ class AddComment extends Component {
     created_by: ""
   };
   render() {
-    const { user, article_id, addComment } = this.props;
+    const { user } = this.props;
     if (user.username) {
       // if logged in
       return (
@@ -30,18 +29,6 @@ class AddComment extends Component {
               value={this.state.body}
               onChange={this.handleChange}
             />
-            {/* <label htmlFor="new-comment-user" id="comment-user-label">
-            User:{" "}
-          </label>
-          <textarea
-            name="user"
-            id="new-comment-user"
-            cols="60"
-            rows="1"
-            readOnly
-            required
-            value={this.props.user.username}
-          /> */}
             <button type="submit">Add Comment</button>
           </form>
         </div>
@@ -85,6 +72,10 @@ class AddComment extends Component {
   };
 }
 
-AddComment.propTypes = {};
+AddComment.propTypes = {
+  addComment: PropTypes.func,
+  article_id: PropTypes.string,
+  user: PropTypes.object
+};
 
 export default AddComment;

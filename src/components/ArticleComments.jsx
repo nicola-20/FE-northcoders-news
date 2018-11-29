@@ -4,7 +4,7 @@ import Comment from "./Comment";
 import * as api from "../api";
 import "./css/ArticleComments.css";
 import AddComment from "./AddComment";
-import { faSearch, faSort } from "@fortawesome/free-solid-svg-icons";
+import { faSort } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class ArticleComments extends Component {
@@ -83,7 +83,7 @@ class ArticleComments extends Component {
   deleteComment = comment_id => {
     const { comments } = this.state;
     api.deleteComment(comment_id).then(() => {
-      this.props.updateCommentCount(-1)
+      this.props.updateCommentCount(-1);
       const commentsWithDeletes = comments.filter(comment => {
         return comment._id !== comment_id;
       });
@@ -96,7 +96,7 @@ class ArticleComments extends Component {
   addComment = (article_id, newComment) => {
     const { comments } = this.state;
     api.addCommentToArticle(article_id, newComment).then(addedComment => {
-      this.props.updateCommentCount(1)
+      this.props.updateCommentCount(1);
       const commentsWithNewCommentAdded = [addedComment, ...comments];
       this.setState({
         comments: commentsWithNewCommentAdded,
@@ -159,6 +159,11 @@ class ArticleComments extends Component {
   };
 }
 
-ArticleComments.propTypes = {};
+ArticleComments.propTypes = {
+  user: PropTypes.object,
+  article_id: PropTypes.string,
+  updateVotes: PropTypes.func,
+  handleArticleVoteChange: PropTypes.func
+};
 
 export default ArticleComments;

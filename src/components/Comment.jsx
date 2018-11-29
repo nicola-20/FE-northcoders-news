@@ -6,7 +6,13 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReactTooltip from "react-tooltip";
 
-const Comment = ({ comment, user, deleteComment, updateVotes, handleCommentVoteChange }) => {
+const Comment = ({
+  comment,
+  user,
+  deleteComment,
+  updateVotes,
+  handleCommentVoteChange
+}) => {
   return (
     <div className="comment">
       <span className="comment-user">{comment.created_by.name}</span>
@@ -14,7 +20,6 @@ const Comment = ({ comment, user, deleteComment, updateVotes, handleCommentVoteC
         {new Date(comment.created_at).toUTCString()}
       </span>
       <p className="comment-body">{comment.body}</p>
-      {/* <p>{new Date(comment.created_at).toUTCString()}</p> */}
       <FontAwesomeIcon
         className="comment-delete"
         icon={faTrash}
@@ -25,17 +30,29 @@ const Comment = ({ comment, user, deleteComment, updateVotes, handleCommentVoteC
               : "You can only delete your own comment!"
             : "You must be logged in to delete comments"
         }
-        onClick = {() => {
-          if(user.name === comment.created_by.name) {deleteComment(comment._id)}
+        onClick={() => {
+          if (user.name === comment.created_by.name) {
+            deleteComment(comment._id);
+          }
         }}
       />
       <ReactTooltip type="dark" />
-      <VoteChanger comment={comment} user={user} updateVotes={updateVotes} handleCommentVoteChange={handleCommentVoteChange}/>
-      {/* <p>{comment.votes}</p> */}
+      <VoteChanger
+        comment={comment}
+        user={user}
+        updateVotes={updateVotes}
+        handleCommentVoteChange={handleCommentVoteChange}
+      />
     </div>
   );
 };
 
-Comment.propTypes = {};
+Comment.propTypes = {
+  comment: PropTypes.object,
+  user: PropTypes.object,
+  deleteComment: PropTypes.func,
+  updateVotes: PropTypes.func,
+  handleCommentVoteChange: PropTypes.func,
+};
 
 export default Comment;

@@ -38,6 +38,11 @@ const Article = ({ article, handleArticleVoteChange, user, updateVotes }) => {
   );
 };
 
-Article.propTypes = {};
+Article.propTypes = {
+  article: PropTypes.object,
+  user: PropTypes.object,
+  handleArticleVoteChange: PropTypes.func,
+  updateVotes: PropTypes.func
+};
 
 export default Article;

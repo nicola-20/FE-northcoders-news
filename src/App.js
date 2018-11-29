@@ -23,7 +23,7 @@ class App extends Component {
         <Nav login={this.login} logout={this.logout} user={this.state.user} />
         {/* <Login login={this.login} user={this.state.user}> */}
         <Router>
-          <Home path="/" />
+          <Home path="/" user={this.state.user}/>
           <Articles path="/articles" user={this.state.user} updateVotes={this.updateVotes}/>
           <Articles
             path="/topics/:topic_slug/articles"

@@ -5,8 +5,7 @@ import "./css/ArticleById.css";
 import * as api from "../api.js";
 import ArticleComments from "./ArticleComments";
 import VoteChanger from "./VoteChanger";
-import { faCommentAlt, faComments } from "@fortawesome/free-regular-svg-icons";
-// import { faComments, faComment, faCommentAlt } from "@fortawesome/free-solid-svg-icons"
+import { faCommentAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class ArticleById extends Component {
@@ -58,7 +57,7 @@ class ArticleById extends Component {
             <div className="articlebyid-body">{article.body}</div>
             <p className="articlebyid-comments">
               <Link to={`/articles/${article._id}/comments`}>
-                <FontAwesomeIcon className="icon" icon={faComments} />
+                <FontAwesomeIcon className="icon" icon={faCommentAlt} />
                 {article.comment_count} comments
               </Link>
             </p>
@@ -87,37 +86,34 @@ class ArticleById extends Component {
         isLoading: false
       });
     });
-    // return Promise.all([api.getArticleByID(article_id), api.getCommentsByArticleID(article_id)])
-    // .then(([article, comments]) => {
-    //   this.setState({
-    //     article, comments
-    //   });
-    // });
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.article.comment_count !== this.state.article.comment_count) {
-    }
   }
   handleArticleVoteChange = (article_id, change) => {
     this.props.updateVotes("article", article_id, change);
-    const { article } = this.state
+    const { article } = this.state;
     let voteChange = 0;
     if (change === "up") voteChange = +1;
     if (change === "down") voteChange = -1;
-    const updatedArticle = {...article, votes: article.votes + voteChange}
+    const updatedArticle = { ...article, votes: article.votes + voteChange };
     this.setState({
       article: updatedArticle
-    })
+    });
   };
-  updateCommentCount = (change) => {
-    const { article } = this.state
-    const updatedArticle = {...article, comment_count: article.comment_count + change}
+  updateCommentCount = change => {
+    const { article } = this.state;
+    const updatedArticle = {
+      ...article,
+      comment_count: article.comment_count + change
+    };
     this.setState({
       article: updatedArticle
-    })
-  }
+    });
+  };
 }
 
-ArticleById.propTypes = {};
+ArticleById.propTypes = {
+  user: PropTypes.object,
+  article_id: PropTypes.string,
+  updateVotes: PropTypes.func
+};
 
 export default ArticleById;

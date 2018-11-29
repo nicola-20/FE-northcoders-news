@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { Router } from "@reach/router";
 import PropTypes from "prop-types";
 import * as api from "../api.js";
-import { Link } from "@reach/router";
 import "./css/Articles.css";
 import Article from "./Article";
 import AddArticle from "./AddArticle";
@@ -57,7 +55,7 @@ class Articles extends Component {
             <option value="created_at asc">Date (Oldest-Newest)</option>
             <option value="created_at desc">Date (Newest-Oldest)</option>
           </select>
-          {'     '}
+          {"     "}
           {/* Search */}
           <FontAwesomeIcon icon={faSearch} />
           <label htmlFor="article-search">SEARCH:</label>
@@ -166,11 +164,6 @@ class Articles extends Component {
     }
   };
 
-  // increment votes by one
-  // state => {return {article: {...state.article, votes: state.article.votes + 1}}}
-  // votes: state.article.votes + 1
-  // re sort on vote
-
   // optimistic rendering, assume it works - give immediate feedback
   // error handling
   // err ? <p> Something went wrong </p> : <votes>
@@ -185,7 +178,6 @@ class Articles extends Component {
   // }
   // )
 
-  // LIMIT NUMBER OF TIMES YOU CAN VOTE
 
   handleSearch = event => {
     const search = event.target.value.toLowerCase();
@@ -212,6 +204,10 @@ class Articles extends Component {
   };
 }
 
-Articles.propTypes = {};
+Articles.propTypes = {
+  user: PropTypes.object,
+  topic_slug: PropTypes.string,
+  updateVotes: PropTypes.func
+};
 
 export default Articles;

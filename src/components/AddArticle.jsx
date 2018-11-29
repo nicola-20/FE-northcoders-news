@@ -5,14 +5,6 @@ import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./css/AddArticle.css";
 import ReactTooltip from "react-tooltip";
-import Login from "./Login";
-import * as api from "../api";
-
-// const postedArticle = {
-//   "title": "new article",
-//   "body": "This is my new article content",
-//   "created_by": `${userDocs[0]._id}`
-// }
 
 class AddArticle extends Component {
   state = {
@@ -112,12 +104,6 @@ class AddArticle extends Component {
                   <option value="cooking">cooking</option>
                 </select>
               )}
-              {/* <select name="topic_slug" required value={this.state.topic_slug} id="new-article-topic" onChange={this.handleChange}>
-                <option value="">Choose a topic...</option>
-                <option>coding</option>
-                <option>football</option>
-                <option>cooking</option>
-              </select> */}
               <br />
               <button
                 className="close"
@@ -173,20 +159,23 @@ class AddArticle extends Component {
     const { addArticle } = this.props;
     const { topic_slug } = this.state;
     event.preventDefault();
-    // const newArticle = this.state
     const newArticle = {
       title: this.state.title,
       body: this.state.body,
       created_by: this.state.created_by
     };
-    addArticle(topic_slug, newArticle)
+    addArticle(topic_slug, newArticle);
     this.setState({
-      title: '',
-      body: ''
-    })
+      title: "",
+      body: ""
+    });
   };
 }
 
-AddArticle.propTypes = {};
+AddArticle.propTypes = {
+  user: PropTypes.object,
+  topic_slug: PropTypes.string,
+  addArticle: PropTypes.func
+};
 
 export default AddArticle;

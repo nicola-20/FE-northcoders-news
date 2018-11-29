@@ -1,4 +1,89 @@
 .Home {
   grid-area: main;
-  border: solid 1px blue;
+  height: 100%;
+  border: solid 0px blue;
+  background-color: rgb(33, 40, 41);
+  display: flex;
+  flex-direction: column;
+}
+.home-box {
+  background-color: rgb(172, 48, 54);
+  width: 95%;
+  max-width: 95%;
+  overflow-x: hidden;
+  height: 86%;
+  overflow-y: scroll;
+  align-self: center;
+  margin: 3%;
+  border: solid 0px rgb(172, 48, 54);
+  border-radius: 0.5em;
+}
+.Home h1 {
+  width: 100%;
+  margin: 2% auto;
+  font-size: 2.2em;
+  background-color: white;
+  padding-top: 1.5%;
+  padding-bottom: 1.5%;
+  color: rgb(33, 40, 41);
+}
+.Home h2 {
+  border: solid 0px brown;
+  width: 95%;
+  margin: 0 auto;
+  text-align: left;
+  color: white;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  padding: 0;
+  margin-top: -1%;
+  margin-bottom: -0.6%;
+}
+.featured-article {
+  background-color: white;
+  border: solid 0px white;
+  width: 100%;
+  align-self: center;
+  margin: 1.2% auto;
+  text-align: justify;
+  padding-bottom: 0.6%;
+}
+#home-northcoders-news {
+  letter-spacing: 0.08em;
+  color: rgb(172, 48, 54);
+}
+.featured-article a:link, .featured-article a:visited {
+  text-decoration: none;
+  color: rgb(33, 40, 41);
+}
+.featured-article a:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.featured-article .home-article-title {
+  border: solid 0px black;
+  /* border-radius: 2em; */
+  font-size: 1.2em;
+  background-color: rgb(33, 40, 41);
+  color: white;
+  width: 100%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-left: 2.4%;
+}
+.featured-article .home-article-title a:link, .featured-article .home-article-title a:visited {
+  color: white;
+}
+.featured-article .featured-article-body {
+  border: solid 0px blue;
+  margin: 1%;
+}
+.featured-article-user {
+  border: solid 0px red;
+  margin-left: 2.1%;
+  font-weight: 700;
+}
+#read-more {
+  font-weight: 700;
+  letter-spacing: 0.1em;
 }

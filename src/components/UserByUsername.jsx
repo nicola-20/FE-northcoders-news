@@ -41,6 +41,8 @@ class UserByUsername extends Component {
   }
 }
 
-UserByUsername.propTypes = {};
+UserByUsername.propTypes = {
+  user: PropTypes.object,
+};
 
 export default UserByUsername;

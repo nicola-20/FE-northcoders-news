@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import { Link } from "@reach/router";
 import * as api from "../api";
 import "./css/Nav.css";
@@ -20,32 +20,45 @@ class Nav extends Component {
   };
   render() {
     const { topics } = this.state;
-    const { user, login, logout } = this.props
+    const { user, login, logout } = this.props;
     return (
       <nav className="Nav">
         <Link to="articles">
           <FontAwesomeIcon
             data-tip="View All Articles"
+            data-for="all-articles-icon"
             className="icon"
             icon={faNewspaper}
           />
-          <ReactTooltip type="dark" />
         </Link>
+        <ReactTooltip type="dark" id="all-articles-icon" />
+        <Link to="topics/coding/articles">
         <FontAwesomeIcon
           className="icon"
           icon={faCode}
           data-tip="Coding Articles"
-        />
+          data-for="coding-articles-icon"
+          />
+          </Link>
+        <ReactTooltip type="dark" id="coding-articles-icon" />
+        <Link to="topics/football/articles">
         <FontAwesomeIcon
           className="icon"
           icon={faFutbol}
           data-tip="Football Articles"
+          data-for="football-articles-icon"
         />
+        </Link>
+        <ReactTooltip type="dark" id="football-articles-icon" />
+        <Link to="topics/cooking/articles">
         <FontAwesomeIcon
           className="icon"
           icon={faUtensils}
           data-tip="Cooking Articles"
+          data-for="cooking-articles-icon"
         />
+        </Link>
+        <ReactTooltip type="dark" id="cooking-articles-icon" />
         {topics.map(topic => {
           return (
             <Link key={topic.slug} to={`topics/${topic.slug}/articles`}>
@@ -54,15 +67,12 @@ class Nav extends Component {
           );
         })}
 
-        <Link to="users">
-          <FontAwesomeIcon
-            className="icon"
-            icon={faUserAlt}
-            data-tip="View All Users"
-          />
-          View Users
+        <Link to="users" data-tip="View All Users" data-for="view-users">
+          <FontAwesomeIcon className="icon" icon={faUserAlt} />
+          USERS
         </Link>
-        <Login login={login} logout={logout} user={user}/>
+        <ReactTooltip type="dark" id="view-users" />
+        <Login login={login} logout={logout} user={user} />
       </nav>
     );
   }
@@ -76,8 +86,10 @@ class Nav extends Component {
   }
 }
 
-// Nav.propTypes = {
-
-// };
+Nav.propTypes = {
+  login: PropTypes.func,
+  logout: PropTypes.func,
+  user: PropTypes.object
+};
 
 export default Nav;

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import * as api from "../api";
-import { Link } from "@reach/router";
 import User from "./User";
 import "./css/Users.css";
 
@@ -35,6 +34,8 @@ class Users extends Component {
   }
 }
 
-Users.propTypes = {};
+Users.propTypes = {
+  user: PropTypes.object,
+};
 
 export default Users;

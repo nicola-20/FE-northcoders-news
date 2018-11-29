@@ -23,12 +23,8 @@ class Login extends Component {
   };
   render() {
     console.log(this.props, "login props");
-    // if (this.props.user.username) {
-    //   return this.props.children
-    // } else {
     const { user } = this.props;
     if (user.username) {
-      // if logged in
       return (
         <>
           <FontAwesomeIcon
@@ -41,7 +37,6 @@ class Login extends Component {
         </>
       );
     } else {
-      // if not logged in
       return (
         <Popup
           className="input-popup"
@@ -55,7 +50,7 @@ class Login extends Component {
           position="bottom right"
         >
           <form onSubmit={this.handleSubmit}>
-          <ReactTooltip type="dark" />
+            <ReactTooltip type="dark" />
             <label htmlFor="username">Username: </label>
             <input
               type="text"
@@ -76,8 +71,6 @@ class Login extends Component {
         </Popup>
       );
     }
-
-    // }
   }
   handleChange = event => {
     const { id, value } = event.target;
@@ -88,25 +81,26 @@ class Login extends Component {
   handleSubmit = event => {
     const { login } = this.props;
     event.preventDefault();
-    api.getUserByUsername(this.state.username)
-    .then(user => {
+    api.getUserByUsername(this.state.username).then(user => {
       login(user);
-    })
+    });
     this.setState({
       loggedIn: true
-    })
-    // this.forceUpdate();
+    });
   };
   handleLogout = event => {
     const { logout } = this.props;
     logout();
     this.setState({
       loggedIn: false
-    })
-    // this.forceUpdate();
+    });
   };
 }
 
-Login.propTypes = {};
+Login.propTypes = {
+  login: PropTypes.func,
+  logout: PropTypes.func,
+  user: PropTypes.object
+};
 
 export default Login;

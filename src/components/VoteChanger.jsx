@@ -66,52 +66,51 @@ class VoteChanger extends Component {
         </div>
       );
     } else if (article) {
-        return (
-          <div className="article-votes">
-            <button
-              value="up"
-              disabled={this.state.vote === "up" || !user.username}
-              onClick={event => {
-                this.vote("up");
-                handleArticleVoteChange(article._id, "up");
-              }}
-            >
-              <FontAwesomeIcon
-                className="icon thumb up"
-                icon={faThumbsUp}
-                data-tip={
-                  user.username
-                    ? this.state.vote === "up"
-                      ? "You can only vote once!"
-                      : "Vote Up"
-                    : "You must be logged in to vote!"
-                }
-              />
-            </button>
-
-            <p>{article.votes}</p>
-            <button
-              value="down"
-              disabled={this.state.vote === "down" || !user.username}
-              onClick={event => {
-                this.vote("down");
-                handleArticleVoteChange(article._id, "down");
-              }}
-            >
-              <FontAwesomeIcon
-                className="icon thumb down"
-                icon={faThumbsDown}
-                data-tip={
-                  user.username
-                    ? this.state.vote === "down"
-                      ? "You can only vote once!"
-                      : "Vote Down"
-                    : "You must be logged in to vote!"
-                }
-              />
-            </button>
-          </div>
-        );
+      return (
+        <div className="article-votes">
+          <button
+            value="up"
+            disabled={this.state.vote === "up" || !user.username}
+            onClick={event => {
+              this.vote("up");
+              handleArticleVoteChange(article._id, "up");
+            }}
+          >
+            <FontAwesomeIcon
+              className="icon thumb up"
+              icon={faThumbsUp}
+              data-tip={
+                user.username
+                  ? this.state.vote === "up"
+                    ? "You can only vote once!"
+                    : "Vote Up"
+                  : "You must be logged in to vote!"
+              }
+            />
+          </button>
+          <p>{article.votes}</p>
+          <button
+            value="down"
+            disabled={this.state.vote === "down" || !user.username}
+            onClick={event => {
+              this.vote("down");
+              handleArticleVoteChange(article._id, "down");
+            }}
+          >
+            <FontAwesomeIcon
+              className="icon thumb down"
+              icon={faThumbsDown}
+              data-tip={
+                user.username
+                  ? this.state.vote === "down"
+                    ? "You can only vote once!"
+                    : "Vote Down"
+                  : "You must be logged in to vote!"
+              }
+            />
+          </button>
+        </div>
+      );
     }
   }
   vote = vote => {
@@ -121,7 +120,13 @@ class VoteChanger extends Component {
   };
 }
 
-VoteChanger.propTypes = {};
+VoteChanger.propTypes = {
+  handleArticleVoteChange: PropTypes.func,
+  handleCommentVoteChange: PropTypes.func,
+  user: PropTypes.object,
+  comment: PropTypes.object,
+  article: PropTypes.object
+};
 
 export default VoteChanger;
 

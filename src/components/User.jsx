@@ -10,7 +10,9 @@ const User = ({ user }) => {
         <h4 key={user._id}>{user.name}</h4>
       </Link>
       <Link to={`/users/${user.username}`}>
-        <p><strong>username: </strong> {user.username}</p>
+        <p>
+          <strong>username: </strong> {user.username}
+        </p>
       </Link>
       <br />
       <Link to={`/users/${user.username}`}>
@@ -20,6 +22,8 @@ const User = ({ user }) => {
   );
 };
 
-User.propTypes = {};
+User.propTypes = {
+  user: PropTypes.object
+};
 
 export default User;

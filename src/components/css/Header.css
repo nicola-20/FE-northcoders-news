@@ -1,6 +1,6 @@
 .Header {
   grid-area: header;
-  border: solid 1px;
+  border: solid 0px black;
   display: flex;
   justify-content: center;
   align-items: center;
