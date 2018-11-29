@@ -1,107 +1,129 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReactTooltip from "react-tooltip";
-import './css/ArticleComments.css'
-import './css/Article.css'
+import "./css/ArticleComments.css";
+import "./css/Article.css";
 
-const VoteChanger = ({
-  article,
-  handleArticleVoteChange,
-  comment,
-  handleCommentVoteChange,
-  user
-}) => {
-  if (comment) {
-    if (user.username) {
-      // if logged in
+class VoteChanger extends Component {
+  state = {
+    vote: ""
+  };
+  render() {
+    const {
+      article,
+      handleArticleVoteChange,
+      comment,
+      handleCommentVoteChange,
+      user
+    } = this.props;
+    if (comment) {
       return (
         <div className="comment-votes">
-          <FontAwesomeIcon
-            className="icon thumb up"
-            icon={faThumbsUp}
-            onClick={() => {
+          <ReactTooltip type="dark" />
+          <button
+            value="up"
+            disabled={this.state.vote === "up" || !user.username}
+            onClick={event => {
+              this.vote("up");
               handleCommentVoteChange(comment._id, "up");
             }}
-          />
+          >
+            <FontAwesomeIcon
+              className="icon thumb up"
+              icon={faThumbsUp}
+              data-tip={
+                user.username
+                  ? this.state.vote === "up"
+                    ? "You can only vote once!"
+                    : "Vote Up"
+                  : "You must be logged in to vote!"
+              }
+            />
+          </button>
           <p>{comment.votes}</p>
-          <FontAwesomeIcon
-            className="icon thumb down"
-            icon={faThumbsDown}
-            onClick={() => {
+          <button
+            value="down"
+            disabled={this.state.vote === "down" || !user.username}
+            onClick={event => {
+              this.vote("down");
               handleCommentVoteChange(comment._id, "down");
             }}
-          />
+          >
+            <FontAwesomeIcon
+              className="icon thumb down"
+              icon={faThumbsDown}
+              data-tip={
+                user.username
+                  ? this.state.vote === "down"
+                    ? "You can only vote once!"
+                    : "Vote Down"
+                  : "You must be logged in to vote!"
+              }
+            />
+          </button>
         </div>
       );
-    } else {
-      // if not logged in
-      return (
-        <div className="comment-votes">
-          <ReactTooltip type="dark" />
-          <FontAwesomeIcon
-            className="icon thumb up"
-            icon={faThumbsUp}
-            data-tip="You must be logged in to vote!"
-          />
-          <p>{comment.votes}</p>
-          <FontAwesomeIcon
-            className="icon thumb down"
-            icon={faThumbsDown}
-            data-tip="You must be logged in to vote!"
-          />
-        </div>
-      );
-    }
-  } else if (article) {
-    if (user.username) {
-      // if logged in
-      return (
-        <div className="article-votes">
-          <FontAwesomeIcon
-            className="icon thumb up"
-            icon={faThumbsUp}
-            onClick={() => {
-              handleArticleVoteChange(article._id, "up");
-            }}
-          />
-          <p>{article.votes}</p>
-          <FontAwesomeIcon
-            className="icon thumb down"
-            icon={faThumbsDown}
-            onClick={() => {
-              handleArticleVoteChange(article._id, "down");
-            }}
-          />
-        </div>
-      );
-    } else {
-      // if not logged in
-      return (
-        <div className="article-votes">
-          <ReactTooltip type="dark" />
-          <FontAwesomeIcon
-            className="icon thumb up"
-            icon={faThumbsUp}
-            data-tip="You must be logged in to vote!"
-          />
-          <p>{article.votes}</p>
-          <FontAwesomeIcon
-            className="icon thumb down"
-            icon={faThumbsDown}
-            data-tip="You must be logged in to vote!"
-          />
-        </div>
-      );
+    } else if (article) {
+        return (
+          <div className="article-votes">
+            <button
+              value="up"
+              disabled={this.state.vote === "up" || !user.username}
+              onClick={event => {
+                this.vote("up");
+                handleArticleVoteChange(article._id, "up");
+              }}
+            >
+              <FontAwesomeIcon
+                className="icon thumb up"
+                icon={faThumbsUp}
+                data-tip={
+                  user.username
+                    ? this.state.vote === "up"
+                      ? "You can only vote once!"
+                      : "Vote Up"
+                    : "You must be logged in to vote!"
+                }
+              />
+            </button>
+
+            <p>{article.votes}</p>
+            <button
+              value="down"
+              disabled={this.state.vote === "down" || !user.username}
+              onClick={event => {
+                this.vote("down");
+                handleArticleVoteChange(article._id, "down");
+              }}
+            >
+              <FontAwesomeIcon
+                className="icon thumb down"
+                icon={faThumbsDown}
+                data-tip={
+                  user.username
+                    ? this.state.vote === "down"
+                      ? "You can only vote once!"
+                      : "Vote Down"
+                    : "You must be logged in to vote!"
+                }
+              />
+            </button>
+          </div>
+        );
     }
   }
-};
+  vote = vote => {
+    this.setState({
+      vote
+    });
+  };
+}
 
 VoteChanger.propTypes = {};
 
 export default VoteChanger;
-
 
 // import React, { Component } from 'react';
 // import PropTypes from 'prop-types';

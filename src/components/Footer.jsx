@@ -7,7 +7,8 @@ class Footer extends Component {
 	render() {
 		return (
 			<footer className="footer">
-        <span className="footer-northcoders">NORTHCODERS </span> News - Nicola Derrick
+        <span className="footer-northcoders">NORTHCODERS/</span>news
+         {'  '} | Nicola Derrick
       </footer>
 		);
 	}

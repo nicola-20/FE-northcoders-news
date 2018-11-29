@@ -46,7 +46,12 @@
 .comment-votes p {
   margin: 0;
 }
-
+.comment-votes button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+}
 .add-comment {
   border: solid 3px blue;
   border: solid 1px forestgreen;

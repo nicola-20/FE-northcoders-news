@@ -8,8 +8,10 @@
   color: white;
   padding: 5px;
   letter-spacing: 0.07em;
-  font-size: 12px;
+  font-size: 14px;
 }
 .footer .footer-northcoders {
-  font-weight: 800px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-emphasis: 
 }

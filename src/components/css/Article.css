@@ -43,6 +43,12 @@
 .article-votes p {
   margin: 0;
 }
+.article-votes button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+}
 .article-title {
   grid-area: article-title;
   border: solid 1px grey;

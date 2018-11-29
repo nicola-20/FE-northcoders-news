@@ -1,5 +1,6 @@
 .Nav {
   grid-area: nav;
+  height: 100%;
   border: solid 0px red;
   display: flex;
   justify-content: space-evenly;
@@ -13,8 +14,8 @@
   color: white;
   text-decoration: none;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  font-size: 16px;
+  letter-spacing: 0.1em;
+  font-size: 18px;
   align-content: center;
 }
 .Nav a:hover {
