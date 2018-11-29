@@ -19,7 +19,6 @@ class Nav extends Component {
     topics: []
   };
   render() {
-    console.log(this.props, 'nav props')
     const { topics } = this.state;
     const { user, login, logout } = this.props
     return (
@@ -50,7 +49,7 @@ class Nav extends Component {
         {topics.map(topic => {
           return (
             <Link key={topic.slug} to={`topics/${topic.slug}/articles`}>
-              {topic.title}
+              {topic.title.toUpperCase()}
             </Link>
           );
         })}

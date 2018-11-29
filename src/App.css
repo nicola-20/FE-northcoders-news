@@ -11,5 +11,5 @@
     'main'
     'footer';
   position: absolute;
-  font-family: 'Montserrat'
+  font-family: 'Montserrat', 'Open Sans', 'Helvetica Neue', sans-serif;
 }

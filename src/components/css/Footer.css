@@ -1,10 +1,15 @@
 .footer {
   grid-area: footer;
-  border: solid 1px green;
+  border: solid 0px green;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(201, 139, 139);
+  background-color: rgb(172, 48, 54);
   color: white;
-  border-radius: 10px;
+  padding: 5px;
+  letter-spacing: 0.07em;
+  font-size: 12px;
+}
+.footer .footer-northcoders {
+  font-weight: 800px;
 }

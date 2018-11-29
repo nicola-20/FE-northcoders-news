@@ -42,7 +42,7 @@ class Articles extends Component {
           />
           {/* Sort  */}
           <FontAwesomeIcon icon={faSort} />
-          <label htmlFor="sort-select">Sort:</label>
+          <label htmlFor="sort-select">SORT:</label>
           <select
             name="sort-select"
             id="sort-select"
@@ -57,8 +57,10 @@ class Articles extends Component {
             <option value="created_at asc">Date (Oldest-Newest)</option>
             <option value="created_at desc">Date (Newest-Oldest)</option>
           </select>
+          {'     '}
           {/* Search */}
-          <label htmlFor="article-search">Search:</label>
+          <FontAwesomeIcon icon={faSearch} />
+          <label htmlFor="article-search">SEARCH:</label>
           <input
             type="text"
             placeholder={`Search...`}
@@ -66,7 +68,6 @@ class Articles extends Component {
             onChange={this.handleSearch}
             value={this.state.search}
           />
-          <FontAwesomeIcon icon={faSearch} />
           {/* Articles */}
           {filteredArticles.map(article => {
             return (

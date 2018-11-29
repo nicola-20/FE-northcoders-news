@@ -1,5 +1,5 @@
 .user-page {
-  background-color: palegreen;
+  background-color: rgb(33, 40, 41);
   grid-area: main;
   height: 100%;
   overflow-y: scroll;
@@ -7,7 +7,7 @@
   justify-content: center;
 }
 .userbyusername-box {
-  border: solid 1px red;
+  border: solid 0px red;
   width: 60%;
   align-self: center;
   margin: 10px auto;
@@ -18,12 +18,12 @@
 }
 .userbyusername-box img {
   height: 85%;
-  border: solid 1px pink;
+  border: solid 0px pink;
   margin: 10 auto;
   padding: 0px;
 }
 .userbyusername-box h4 {
-  border: solid 1px black;
+  border: solid 0px black;
   margin: 0;
   font-size: 30px;
 }
@@ -31,6 +31,6 @@
   color: black;
 }
 .userbyusername-box p {
-  border: solid 1px blueviolet;
+  border: solid 0px blueviolet;
   margin: 5px;
 }

@@ -5,5 +5,25 @@
   overflow-y: scroll;
   justify-content: center;
   align-items: center;
-  background-color: rgb(232, 235, 244);
+  background-color: rgb(237, 237, 237);
+}
+#sort-select {
+  border: solid 1px black;
+  border-radius: 3px;
+  font-family: 'Montserrat';
+  margin: 5px;
+  font-size: 14px;
+}
+#article-search {
+  border: solid 1px black;
+  border-radius: 3px;
+  font-family: 'Montserrat';
+  margin: 5px;
+  font-size: 14px;
+  padding-left: 4px;
+}
+.Articles label {
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin: 5px;
 }

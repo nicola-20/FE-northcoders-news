@@ -29,7 +29,7 @@ class ArticleComments extends Component {
 
           <div className="articlebyid-comment-sort">
             <FontAwesomeIcon icon={faSort} />
-            <label htmlFor="sort-select">Sort:</label>
+            <label htmlFor="sort-select">SORT:</label>
             <select
               name="sort-select"
               id="sort-select"

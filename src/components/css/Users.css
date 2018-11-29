@@ -1,6 +1,6 @@
 .users-list {
   grid-area: main;
-  border: solid 1px green;
+  border: solid 0px green;
   max-height: 100%;
   overflow-y: scroll;
   align-items: center;
@@ -8,12 +8,13 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  background-color: yellow;
+  background-color: rgb(33, 40, 41);
 }
 .user-card {
-  border: solid 1px red;
-  width: 25%;
+  border: solid 0px red;
+  width: 30%;
   margin: 10px;
+  margin-top: 20px;
   height: 300px;
   padding: 10px;
   background-color: white;
@@ -21,18 +22,23 @@
 }
 .user-card img {
   height: 80%;
-  border: solid 1px pink;
+  border: solid 0px pink;
   margin: -10px auto;
   padding: 0px;
 }
 .user-card h4 {
-  border: solid 1px black;
+  border: solid 0px black;
   margin: 0;
+  font-size: 20px;
 }
 .user-card a:link, .user-card a:visited {
   color: black;
+  text-decoration: none;
+}
+.user-card a:hover {
+  text-decoration: underline;
 }
 .user-card p {
-  border: solid 1px blueviolet;
+  border: solid 0px blueviolet;
   margin: 5px;
 }

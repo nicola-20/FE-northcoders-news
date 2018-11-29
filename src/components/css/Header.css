@@ -1,10 +1,42 @@
-header {
+.Header {
   grid-area: header;
-  border: solid 1px orange;
+  border: solid 1px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color:  rgb(33, 40, 41);
+  padding: 10px;
 }
-.Header a:link, a:visited {
+.Header h1 {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  font-size: 3em;
+  margin: 10px;
+  align-self: center;
+}
+.Header a:link, .Header a:visited {
   text-decoration: none;
+  color: rgb(33, 40, 41);
+}
+.northcoders {
+  border: solid 0px white;
+  padding: 2px;
+  padding-left: 8px;
+  padding-right: -2px;
+  background-color: white;
+  border-radius: 5px;
+  color: rgb(33, 40, 41);
+}
+.news {
+  border: solid 0px rgb(172, 48, 54);
+  text-transform: lowercase;
+  background-color: rgb(172, 48, 54);
+  color: white;
+  padding: 2px;
+  border-radius: 5px;
+  padding-right: 8px;
+}
+#N {
+  color: rgb(172, 48, 54);
 }
