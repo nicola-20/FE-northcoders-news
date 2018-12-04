@@ -35,38 +35,42 @@ class AddArticle extends Component {
           {close => (
             <form className="add-article-form" onSubmit={this.handleSubmit}>
               <ReactTooltip type="dark" id="plus-icon-add" />
-              <h4>Add Article:</h4>
-              <label htmlFor="new-article-title" id="title-label">
+              <h4>ADD ARTICLE:</h4>
+              <label htmlFor="new-article-title-box" id="title-label">
                 Title:
               </label>
-              <textarea
-                name="title"
-                id="new-article-title"
-                cols="60"
-                rows="2"
-                required
-                value={this.state.title}
-                onChange={this.handleChange}
-              />
-              <p className="form-error">
-                {this.state.err ? "Article needs a title" : ""}
-              </p>
+              <div id="new-article-title">
+                <textarea
+                  name="title"
+                  id="new-article-title-box"
+                  cols="60"
+                  rows="2"
+                  required
+                  value={this.state.title}
+                  onChange={this.handleChange}
+                />
+                <p className="form-error">
+                  {this.state.err ? "Article needs a title!" : ""}
+                </p>
+              </div>
               <br />
-              <label htmlFor="new-article-body" id="content-label">
+              <label htmlFor="new-article-body-box" id="content-label">
                 Content:{" "}
               </label>
-              <textarea
-                name="body"
-                id="new-article-body"
-                cols="60"
-                rows="10"
-                required
-                value={this.state.body}
-                onChange={this.handleChange}
-              />
-              <p className="form-error">
-                {this.state.err ? "Article needs some content" : ""}
-              </p>
+              <div id="new-article-body">
+                <textarea
+                  name="body"
+                  id="new-article-body-box"
+                  cols="60"
+                  rows="10"
+                  required
+                  value={this.state.body}
+                  onChange={this.handleChange}
+                />
+                <p className="form-error">
+                  {this.state.err ? "Article needs some content!" : ""}
+                </p>
+              </div>
               <br />
               <label htmlFor="new-article-user" id="user-label">
                 User:{" "}
@@ -85,18 +89,28 @@ class AddArticle extends Component {
                 Topic:{" "}
               </label>
               {topic_slug ? (
-                <select
-                  name="topic_slug"
-                  required
-                  readOnly
-                  value={this.props.topic_slug}
-                  id="new-article-topic"
-                >
-                  <option>Choose a topic...</option>
-                  <option>coding</option>
-                  <option>football</option>
-                  <option>cooking</option>
-                </select>
+                <textarea
+                name="topic_slug"
+                className="new-article-topic-set"
+                id="new-article-topic"
+                cols="60"
+                rows="1"
+                readOnly
+                required
+                value={this.props.topic_slug}
+                />
+                // <select
+                //   name="topic_slug"
+                //   required
+                //   readOnly
+                //   value={this.props.topic_slug}
+                //   id="new-article-topic"
+                // >
+                //   <option>Choose a topic...</option>
+                //   <option>coding</option>
+                //   <option>football</option>
+                //   <option>cooking</option>
+                // </select>
               ) : (
                 <select
                   name="topic_slug"
@@ -152,12 +166,22 @@ class AddArticle extends Component {
       created_by: user._id,
       topic_slug
     });
+    if (!this.props.topic_slug) {
+      this.setState({
+        topic_slug: ''
+      })
+    }
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.user !== this.props.user) {
       this.setState({
         created_by: this.props.user._id
       });
+    }
+    if (prevProps.topic_slug !== this.props.topic_slug) {
+      this.setState({
+        topic_slug: this.props.topic_slug
+      })
     }
   }
   handleChange = event => {

@@ -4,10 +4,8 @@ import "../App.css";
 import "./css/Home.css";
 import * as api from "../api";
 import _ from "lodash";
-import { Link } from "@reach/router";
-import Truncate from "react-truncate";
-import ReactTooltip from "react-tooltip";
 import Loading from "./Loading";
+import FeaturedArticle from "./FeaturedArticle";
 import { navigate } from '@reach/router'
 
 class Home extends Component {
@@ -34,32 +32,7 @@ class Home extends Component {
             </h1>
             <h2>FEATURED ARTICLES: </h2>
             {featuredArticles.map(article => {
-              return (
-                <div key={article._id} className="featured-article">
-                  <h3 className="home-article-title">
-                    <Link to={`/articles/${article._id}`}>{article.title}</Link>
-                  </h3>
-                  <p className="featured-article-user">
-                    <Link to={`users/${article.created_by.username}`}>
-                      {article.created_by.name}
-                    </Link>
-                  </p>
-                  <p className="featured-article-body">
-                    <Truncate lines={3} ellipsis={""}>
-                      {article.body}
-                    </Truncate>
-                    <Link
-                      to={`/articles/${article._id}`}
-                      data-tip="Read rest of article"
-                      data-for="article-see-more"
-                      id="read-more"
-                    >
-                      ...
-                    </Link>
-                  </p>
-                    <ReactTooltip type="dark" id="article-see-more" />
-                </div>
-              );
+              return <FeaturedArticle article={article}/>
             })}
           </div>
         </main>

@@ -18,6 +18,8 @@
 }
 .userbyusername-box img {
   height: 85%;
+  max-width: 100%;
+  object-fit: cover;
   border: solid 0px pink;
   margin: 10 auto;
   padding: 0px;

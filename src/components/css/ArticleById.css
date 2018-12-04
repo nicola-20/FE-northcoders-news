@@ -80,6 +80,7 @@
   margin: 0px;
   justify-self: center;
   font-size: 18px;
+  color: white;
 }
 .article-byid .article-votes {
   border: solid 0px orange;

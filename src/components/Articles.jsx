@@ -4,10 +4,9 @@ import * as api from "../api.js";
 import "./css/Articles.css";
 import Article from "./Article";
 import AddArticle from "./AddArticle";
-import { faSearch, faSort } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Loading from "./Loading.jsx";
-import { navigate } from '@reach/router'
+import SortAndSearch from "./SortAndSearch.jsx";
+import { navigate } from "@reach/router";
 
 class Articles extends Component {
   state = {
@@ -28,51 +27,29 @@ class Articles extends Component {
       );
     });
     if (isLoading) {
-      return (
-        <Loading />
-      );
+      return <Loading />;
     } else {
       return (
         <main className="Articles">
           <div className="article-header">
             {/* Title */}
-            <h2>articles on <span className="italic">{topic_slug || `everything`}</span></h2>
+            <h2>
+              articles on{" "}
+              <span className="italic">{topic_slug || `everything`}</span>
+            </h2>
             {/* Add article */}
             <AddArticle
               user={user}
               topic_slug={topic_slug}
               addArticle={this.addArticle}
             />
-            {/* Sort  */}
-            <div id="sort-and-search">
-              <FontAwesomeIcon icon={faSort} />
-              <label htmlFor="sort-select">SORT:</label>
-              <select
-                name="sort-select"
-                id="sort-select"
-                onChange={this.handleChangeSort}
-                value={this.state.sort}
-              >
-                <option value="">Sort by...</option>
-                <option value="title asc">Title (A-Z)</option>
-                <option value="title desc">Title (Z-A)</option>
-                <option value="votes asc">Votes (Low-High)</option>
-                <option value="votes desc">Votes (High-Low)</option>
-                <option value="created_at asc">Date (Oldest-Newest)</option>
-                <option value="created_at desc">Date (Newest-Oldest)</option>
-              </select>
-              {"     "}
-              {/* Search */}
-              <FontAwesomeIcon icon={faSearch} />
-              <label htmlFor="article-search">SEARCH:</label>
-              <input
-                type="text"
-                placeholder={`Search...`}
-                id="article-search"
-                onChange={this.handleSearch}
-                value={this.state.search}
-              />
-            </div>
+            {/* Sort and Search */}
+            <SortAndSearch
+              handleChangeSort={this.handleChangeSort}
+              sort={this.state.sort}
+              search={this.state.search}
+              handleSearch={this.handleSearch}
+            />
           </div>
           {/* Articles */}
           {filteredArticles.map(article => {
@@ -98,6 +75,9 @@ class Articles extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.topic_slug !== this.props.topic_slug) {
       this.fetchArticles();
+      this.setState({
+        search: ""
+      });
     }
     if (prevState.sort !== this.state.sort) {
       this.fetchArticles();
@@ -107,34 +87,63 @@ class Articles extends Component {
   fetchArticles() {
     const { topic_slug } = this.props;
     const { sort } = this.state;
+
+    // topic_slug ? api.getArticlesByTopic(topic_slug, sort) : api.getArticles(sort)
+    // .then(articles => {
+    //   this.setState({
+    //     articles,
+    //     isLoading: false
+    //   });
+    // })
+    // .catch(err => {
+    //   navigate("/error", {
+    //     state: {
+    //       code: err.response.status,
+    //       message: err.response.statusText
+    //     }
+    //   });
+    // });
+
     if (topic_slug) {
-      api.getArticlesByTopic(topic_slug, sort).then(articles => {
-        this.setState({
-          articles,
-          isLoading: false
+      api
+        .getArticlesByTopic(topic_slug, sort)
+        .then(articles => {
+          this.setState({
+            articles,
+            isLoading: false
+          });
+        })
+        .catch(err => {
+          navigate("/error", {
+            state: {
+              code: err.response.status,
+              message: err.response.statusText
+            }
+          });
         });
-      })
-      .catch((err) => {
-        navigate("/error", {state: {code: err.response.status, message: err.response.statusText}})
-      })
     } else {
-      api.getArticles(sort).then(articles => {
-        this.setState({
-          articles,
-          isLoading: false
+      api
+        .getArticles(sort)
+        .then(articles => {
+          this.setState({
+            articles,
+            isLoading: false
+          });
+        })
+        .catch(err => {
+          navigate("/error", {
+            state: {
+              code: err.response.status,
+              message: err.response.statusText
+            }
+          });
         });
-      })
-      .catch((err) => {
-        navigate("/error", {state: {code: err.response.status, message: err.response.statusText}})
-      })
     }
   }
 
   handleArticleVoteChange = (article_id, change) => {
     this.props.updateVotes("article", article_id, change);
-    let voteChange = 0;
-    if (change === "up") voteChange = +1;
-    if (change === "down") voteChange = -1;
+    const voteChange = change === 'up' ? 1 : change === 'down' ? -1 : 0;
     const { articles, sort } = this.state;
     const updatedArticles = articles.map(article => {
       if (article._id === article_id) {
@@ -185,17 +194,21 @@ class Articles extends Component {
   };
   addArticle = (topic_slug, newArticle) => {
     const { articles } = this.state;
-    api.addArticleToTopic(topic_slug, newArticle).then(addedArticle => {
-      const articlesWithNewArticleAdded = [addedArticle, ...articles];
-      this.setState({
-        articles: articlesWithNewArticleAdded,
-        search: "",
-        isLoading: false
+    api
+      .addArticleToTopic(topic_slug, newArticle)
+      .then(addedArticle => {
+        const articlesWithNewArticleAdded = [addedArticle, ...articles];
+        this.setState({
+          articles: articlesWithNewArticleAdded,
+          search: "",
+          isLoading: false
+        });
+      })
+      .catch(err => {
+        navigate("/error", {
+          state: { code: err.response.status, message: err.response.statusText }
+        });
       });
-    })
-    .catch((err) => {
-      navigate("/error", {state: {code: err.response.status, message: err.response.statusText}})
-    })
   };
   handleChangeSort = event => {
     const sort = event.target.value;

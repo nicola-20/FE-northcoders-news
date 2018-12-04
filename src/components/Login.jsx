@@ -58,7 +58,7 @@ class Login extends Component {
               value={this.state.username}
               onChange={this.handleChange}
             />
-            <p className="form-error">{this.state.err ? "Username does not exist" : ''}</p>
+            <p className="login form-error">{this.state.err ? "Username does not exist!" : ''}</p>
             <label htmlFor="password">Password: </label>
             <input
               type="password"

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Router, Link, navigate } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import "./css/ArticleById.css";
 import * as api from "../api.js";
 import ArticleComments from "./ArticleComments";
@@ -31,7 +31,7 @@ class ArticleById extends Component {
     const { article, isLoading } = this.state;
     const { user, updateVotes } = this.props;
     if (isLoading) {
-      return <Loading />
+      return <Loading />;
     } else {
       return (
         <main className="ArticleById">
@@ -65,14 +65,28 @@ class ArticleById extends Component {
             </p>
             <div className="articlebyid-body">{article.body}</div>
             <p className="articlebyid-comments">
-              <Link to={`/articles/${article._id}/comments`}>
+              {/* <Collapsible
+                trigger={
+                  <> */}
+                    <FontAwesomeIcon className="icon" icon={faCommentAlt} />
+                    <strong>{article.comment_count}</strong> comments
+                  {/* </>
+                }
+              > */}
+              {/* </Collapsible> */}
+              {/* <Link to={`/articles/${article._id}/comments`}>
                 <FontAwesomeIcon className="icon" icon={faCommentAlt} />{" "}
                 <strong>{article.comment_count}</strong> comments
-              </Link>
+              </Link> */}
             </p>
           </div>
-
-          <Router>
+              <ArticleComments
+                article_id={this.state.article._id}
+                user={user}
+                updateVotes={updateVotes}
+                updateCommentCount={this.updateCommentCount}
+              />
+          {/* <Router>
             <ArticleComments
               path="/comments"
               article_id={this.state.article._id}
@@ -80,7 +94,7 @@ class ArticleById extends Component {
               updateVotes={updateVotes}
               updateCommentCount={this.updateCommentCount}
             />
-          </Router>
+          </Router> */}
         </main>
       );
     }
@@ -96,13 +110,15 @@ class ArticleById extends Component {
           isLoading: false
         });
       })
-      .catch((err) => {
-        navigate("/error", {state: {code: err.response.status, message: err.response.statusText}})
-      })
-      // .catch(err => {
-      //   console.log(err, 'error')
-      //   this.setState({ err });
-      // });
+      .catch(err => {
+        navigate("/error", {
+          state: { code: err.response.status, message: err.response.statusText }
+        });
+      });
+    // .catch(err => {
+    //   console.log(err, 'error')
+    //   this.setState({ err });
+    // });
   }
   handleArticleVoteChange = (article_id, change) => {
     this.props.updateVotes("article", article_id, change);
