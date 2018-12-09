@@ -41,7 +41,7 @@ const SortAndSearch = ({ handleChangeSort, sort, search, handleSearch }) => {
 SortAndSearch.propTypes = {
   handleChangeSort: PropTypes.func,
   sort: PropTypes.string,
-  search: PropTypes.search,
+  search: PropTypes.string,
   handleSearch: PropTypes.func
 };
 

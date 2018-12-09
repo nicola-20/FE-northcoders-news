@@ -18,7 +18,7 @@ export const getTopics = async () => {
   return data.topics;
 };
 
-export const getArticlesByTopic = async (topic_slug, sort) => {
+export const getArticlesByTopic = async (sort, topic_slug) => {
   const sortString =
     sort.length > 1
       ? `&sort=${sort.split(" ")[0]}&by=${sort.split(" ")[1]}`

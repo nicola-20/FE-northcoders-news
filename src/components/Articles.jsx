@@ -7,6 +7,7 @@ import AddArticle from "./AddArticle";
 import Loading from "./Loading.jsx";
 import SortAndSearch from "./SortAndSearch.jsx";
 import { navigate } from "@reach/router";
+import * as utils from '../utils/index.js'
 
 class Articles extends Component {
   state = {
@@ -32,18 +33,15 @@ class Articles extends Component {
       return (
         <main className="Articles">
           <div className="article-header">
-            {/* Title */}
             <h2>
               articles on{" "}
               <span className="italic">{topic_slug || `everything`}</span>
             </h2>
-            {/* Add article */}
             <AddArticle
               user={user}
               topic_slug={topic_slug}
               addArticle={this.addArticle}
             />
-            {/* Sort and Search */}
             <SortAndSearch
               handleChangeSort={this.handleChangeSort}
               sort={this.state.sort}
@@ -51,7 +49,6 @@ class Articles extends Component {
               handleSearch={this.handleSearch}
             />
           </div>
-          {/* Articles */}
           {filteredArticles.map(article => {
             return (
               <Article
@@ -69,7 +66,27 @@ class Articles extends Component {
   }
 
   componentDidMount() {
-    this.fetchArticles();
+    const { topic_slug } = this.props
+    if (topic_slug) {
+      api.getTopics().then(topics => {
+        if (
+          topics.filter(topic => {
+            return topic.slug === topic_slug;
+          }).length < 1
+        ) {
+          navigate("error", {
+            state: {
+              code: 404,
+              message: `The topic "${topic_slug}" does not exist`
+            }
+          });
+        } else {
+          this.fetchArticles();
+        }
+      })
+    } else {
+      this.fetchArticles();
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -87,64 +104,28 @@ class Articles extends Component {
   fetchArticles() {
     const { topic_slug } = this.props;
     const { sort } = this.state;
-
-    // topic_slug ? api.getArticlesByTopic(topic_slug, sort) : api.getArticles(sort)
-    // .then(articles => {
-    //   this.setState({
-    //     articles,
-    //     isLoading: false
-    //   });
-    // })
-    // .catch(err => {
-    //   navigate("/error", {
-    //     state: {
-    //       code: err.response.status,
-    //       message: err.response.statusText
-    //     }
-    //   });
-    // });
-
-    if (topic_slug) {
-      api
-        .getArticlesByTopic(topic_slug, sort)
-        .then(articles => {
-          this.setState({
-            articles,
-            isLoading: false
-          });
-        })
-        .catch(err => {
-          navigate("/error", {
-            state: {
-              code: err.response.status,
-              message: err.response.statusText
-            }
-          });
+    const funcToCall = topic_slug ? api.getArticlesByTopic : api.getArticles;
+    funcToCall(sort, topic_slug)
+      .then(articles => {
+        this.setState({
+          articles,
+          isLoading: false
         });
-    } else {
-      api
-        .getArticles(sort)
-        .then(articles => {
-          this.setState({
-            articles,
-            isLoading: false
-          });
-        })
-        .catch(err => {
-          navigate("/error", {
-            state: {
-              code: err.response.status,
-              message: err.response.statusText
-            }
-          });
+      })
+      .catch(err => {
+        navigate("/error", {
+          state: {
+            code: err.response.status,
+            message: err.response.statusText
+          }
         });
-    }
+      });
   }
 
   handleArticleVoteChange = (article_id, change) => {
-    this.props.updateVotes("article", article_id, change);
-    const voteChange = change === 'up' ? 1 : change === 'down' ? -1 : 0;
     const { articles, sort } = this.state;
+    this.props.updateVotes("article", article_id, change);
+    const voteChange = change === "up" ? 1 : change === "down" ? -1 : 0;
     const updatedArticles = articles.map(article => {
       if (article._id === article_id) {
         return { ...article, votes: article.votes + voteChange };
@@ -154,36 +135,11 @@ class Articles extends Component {
     });
     if (sort.split(" ")[0] === "votes") {
       const direction = sort.split(" ")[1];
-      let sortedArticles = [];
-      if (direction === "asc") {
-        sortedArticles = updatedArticles.sort((a, b) => {
-          if (a.votes < b.votes) {
-            return -1;
-          } else if (a.votes > b.votes) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
-      } else if (direction === "desc") {
-        sortedArticles = updatedArticles.sort((a, b) => {
-          if (a.votes < b.votes) {
-            return 1;
-          } else if (a.votes > b.votes) {
-            return -1;
-          } else {
-            return 0;
-          }
-        });
-      }
-      this.setState({
-        articles: sortedArticles
-      });
-    } else {
-      this.setState({
-        articles: updatedArticles
-      });
+      utils.sortByVotes(updatedArticles, direction)
     }
+    this.setState({
+      articles: updatedArticles
+    });
   };
 
   handleSearch = event => {
@@ -192,6 +148,7 @@ class Articles extends Component {
       search
     });
   };
+
   addArticle = (topic_slug, newArticle) => {
     const { articles } = this.state;
     api
@@ -210,6 +167,7 @@ class Articles extends Component {
         });
       });
   };
+  
   handleChangeSort = event => {
     const sort = event.target.value;
     this.setState({

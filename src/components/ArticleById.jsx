@@ -11,20 +11,7 @@ import Loading from "./Loading";
 
 class ArticleById extends Component {
   state = {
-    article: {
-      _id: "",
-      votes: 0,
-      title: "",
-      created_by: {
-        username: "",
-        name: ""
-      },
-      body: "",
-      created_at: "",
-      belongs_to: "",
-      __v: 0,
-      comment_count: 0
-    },
+    article: {},
     isLoading: true
   };
   render() {
@@ -65,36 +52,16 @@ class ArticleById extends Component {
             </p>
             <div className="articlebyid-body">{article.body}</div>
             <p className="articlebyid-comments">
-              {/* <Collapsible
-                trigger={
-                  <> */}
-                    <FontAwesomeIcon className="icon" icon={faCommentAlt} />
-                    <strong>{article.comment_count}</strong> comments
-                  {/* </>
-                }
-              > */}
-              {/* </Collapsible> */}
-              {/* <Link to={`/articles/${article._id}/comments`}>
-                <FontAwesomeIcon className="icon" icon={faCommentAlt} />{" "}
-                <strong>{article.comment_count}</strong> comments
-              </Link> */}
+              <FontAwesomeIcon className="icon" icon={faCommentAlt} />
+              <strong>{article.comment_count}</strong> comments
             </p>
           </div>
-              <ArticleComments
-                article_id={this.state.article._id}
-                user={user}
-                updateVotes={updateVotes}
-                updateCommentCount={this.updateCommentCount}
-              />
-          {/* <Router>
-            <ArticleComments
-              path="/comments"
-              article_id={this.state.article._id}
-              user={user}
-              updateVotes={updateVotes}
-              updateCommentCount={this.updateCommentCount}
-            />
-          </Router> */}
+          <ArticleComments
+            article_id={this.state.article._id}
+            user={user}
+            updateVotes={updateVotes}
+            updateCommentCount={this.updateCommentCount}
+          />
         </main>
       );
     }

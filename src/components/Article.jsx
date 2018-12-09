@@ -15,7 +15,7 @@ const Article = ({ article, handleArticleVoteChange, user, updateVotes }) => {
       <p className="article-user">
         {/* by{" "} */}
         <Link to={`/users/${article.created_by.username}`}>
-          <FontAwesomeIcon className="icon" icon={faUserAlt} />
+          <FontAwesomeIcon className="icon" icon={faUserAlt} />{' '}
           {article.created_by.name}
         </Link>
       </p>

@@ -10,6 +10,7 @@ import Loading from "./Loading";
 import { navigate } from "@reach/router";
 import Collapsible from "react-collapsible";
 import { faCommentAlt } from "@fortawesome/free-solid-svg-icons";
+import * as utils from "../utils/index.js";
 
 class ArticleComments extends Component {
   state = {
@@ -27,7 +28,7 @@ class ArticleComments extends Component {
         <Collapsible
           trigger={
             <div className="comment-trigger">
-              <FontAwesomeIcon className="icon" icon={faCommentAlt} /> {' '}
+              <FontAwesomeIcon className="icon" icon={faCommentAlt} />{" "}
               <strong>{comments.length}</strong> comments
             </div>
           }
@@ -138,11 +139,9 @@ class ArticleComments extends Component {
       });
   };
   handleCommentVoteChange = (comment_id, change) => {
-    this.props.updateVotes("comment", comment_id, change);
-    let voteChange = 0;
-    if (change === "up") voteChange = +1;
-    if (change === "down") voteChange = -1;
     const { comments, sort } = this.state;
+    this.props.updateVotes("comment", comment_id, change);
+    const voteChange = change === "up" ? 1 : change === "down" ? -1 : 0;
     const updatedComments = comments.map(comment => {
       if (comment._id === comment_id) {
         return { ...comment, votes: comment.votes + voteChange };
@@ -152,36 +151,11 @@ class ArticleComments extends Component {
     });
     if (sort.split(" ")[0] === "votes") {
       const direction = sort.split(" ")[1];
-      let sortedComments = [];
-      if (direction === "asc") {
-        sortedComments = updatedComments.sort((a, b) => {
-          if (a.votes < b.votes) {
-            return -1;
-          } else if (a.votes > b.votes) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
-      } else if (direction === "desc") {
-        sortedComments = updatedComments.sort((a, b) => {
-          if (a.votes < b.votes) {
-            return 1;
-          } else if (a.votes > b.votes) {
-            return -1;
-          } else {
-            return 0;
-          }
-        });
-      }
-      this.setState({
-        comments: sortedComments
-      });
-    } else {
-      this.setState({
-        comments: updatedComments
-      });
+      utils.sortByVotes(updatedComments, direction);
     }
+    this.setState({
+      comments: updatedComments
+    });
   };
 
   handleChangeSort = event => {

@@ -75,9 +75,10 @@ class AddComment extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const { article_id, addComment } = this.props;
+    const { body, created_by } = this.state
     const newComment = {
-      body: this.state.body,
-      created_by: this.state.created_by
+      body,
+      created_by
     };
     addComment(article_id, newComment);
     this.setState({
