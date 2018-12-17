@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://stormy-river-98715.herokuapp.com/api";
+const BASE_URL = "https://nd-be-news.herokuapp.com/api";
 
 export const getArticles = async sort => {
   const sortString =
